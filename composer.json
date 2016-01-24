@@ -1,0 +1,23 @@
+{
+    "name": "mirasvit/module-profiler",
+    "description": "Profiler",
+    "require": {
+        "php": "~5.5.0|~5.6.0|~7.0.0",
+        "magento/module-store": "100.0.*",
+        "magento/module-backend": "100.0.*",
+        "magento/framework": "100.0.*"
+    },
+    "type": "magento2-module",
+    "version": "100.0.0-aplha1",
+    "license": [
+      "proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "src/Profiler/registration.php"
+        ],
+        "psr-4": {
+            "Mirasvit\\Profiler\\": "src/Profiler"
+        }
+    }
+}
