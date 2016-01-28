@@ -1,0 +1,26 @@
+<?php
+/** @var \Mirasvit\Profiler\Block\Tab\Profiler $block */
+
+$stat = $block->getStat();
+?>
+
+<table cellpadding="0" cellspacing="0">
+    <tr>
+        <th><?= __('Timer Id') ?></th>
+        <th><?= __('Time (ms)') ?></th>
+        <th><?= __('Avg (ms)') ?></th>
+        <th><?= __('Cnt') ?></th>
+        <th><?= __('Emalloc') ?></th>
+        <th><?= __('RealMem') ?></th>
+    </tr>
+    <?php foreach ($stat->getFilteredTimerIds() as $timerId): ?>
+        <tr>
+            <td><?= $this->renderTimerId($stat->fetch($timerId, 'id')) ?></td>
+            <td><?= round($stat->fetch($timerId, 'sum') * 1000, 1) ?></td>
+            <td><?= round($stat->fetch($timerId, 'avg') * 1000, 1) ?></td>
+            <td><?= $stat->fetch($timerId, 'count') ?></td>
+            <td><?= $stat->fetch($timerId, 'emalloc') ?></td>
+            <td><?= $stat->fetch($timerId, 'realmem') ?></td>
+        </tr>
+    <?php endforeach ?>
+</table>

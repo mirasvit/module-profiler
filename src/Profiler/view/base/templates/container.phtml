@@ -1,0 +1,23 @@
+<?php
+/** @var \Mirasvit\Profiler\Block\Container $block */
+
+?>
+<div class="mirasvit-profiler-clearfix"></div>
+
+<div class="mirasvit-profiler__container">
+    <ul class="mirasvit-profiler__container-tabs">
+    <?php foreach ($block->getTabs() as $tab): ?>
+        <li><?= $tab->getLabel() ?></li>
+    <?php endforeach ?>
+    </ul>
+
+    <?php foreach ($this->getTabs() as $tab): ?>
+        <?= $tab->toHtml() ?>
+    <?php endforeach ?>
+</div>
+
+
+
+<?php //foreach ($block->getStat()->getFilteredTimerIds() as $timerId): ?>
+<?php //echo $block->getStat()->fetch($timerId, 'sum') ?>
+<?php //endforeach ?>

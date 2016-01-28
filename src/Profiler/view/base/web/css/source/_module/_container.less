@@ -1,0 +1,54 @@
+.mirasvit-profiler__container {
+  background: #fff;
+  font-size: 1.2rem;
+  padding: 1rem;
+  position: relative;
+  z-index: 100000;
+
+  pre {
+    background: transparent !important;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  .mirasvit-profiler__container-tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+
+    > li {
+      padding: 1rem 3rem;
+      display: inline-block;
+      border: 1px solid #eee;
+      margin: 0 1rem -1px 0;
+    }
+  }
+
+  table {
+    width: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: none;
+
+    tr {
+      td, th {
+        padding: 0.5rem 1rem;
+        text-align: left;
+        border: 1px solid #ddd;
+        background: #fff;
+      }
+
+      &:nth-child(odd) td {
+        background: #f3f4f5;
+      }
+    }
+  }
+}
+
+.mirasvit-profiler-clearfix {
+  .lib-clearfix();
+}
+
