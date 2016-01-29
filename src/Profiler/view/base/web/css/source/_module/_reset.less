@@ -1,0 +1,43 @@
+.mirasvit-profiler__container {
+  font-size: 1.2rem;
+
+  pre {
+    background: transparent !important;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  table {
+    width: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: none;
+
+    &.wide {
+      width: 100%;
+    }
+
+    tr {
+      td, th {
+        padding: 0.5rem 1rem;
+        text-align: left;
+        border: 1px solid #ddd;
+        background: #fff;
+
+        &.number {
+          text-align: right;
+        }
+      }
+
+      &:nth-child(odd) td {
+        background: #f3f4f5;
+      }
+
+      th {
+        background: #f3f4f5;
+      }
+    }
+  }
+}

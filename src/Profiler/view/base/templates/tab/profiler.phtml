@@ -2,25 +2,37 @@
 /** @var \Mirasvit\Profiler\Block\Tab\Profiler $block */
 
 $stat = $block->getStat();
+
+/** @var \Mirasvit\Profiler\Helper\Format $format */
+$format = $this->helper('Mirasvit\Profiler\Helper\Format');
 ?>
 
-<table cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0" id="profiler-table" class="wide">
     <tr>
         <th><?= __('Timer Id') ?></th>
         <th><?= __('Time (ms)') ?></th>
         <th><?= __('Avg (ms)') ?></th>
         <th><?= __('Cnt') ?></th>
-        <th><?= __('Emalloc') ?></th>
-        <th><?= __('RealMem') ?></th>
     </tr>
     <?php foreach ($stat->getFilteredTimerIds() as $timerId): ?>
-        <tr>
-            <td><?= $this->renderTimerId($stat->fetch($timerId, 'id')) ?></td>
-            <td><?= round($stat->fetch($timerId, 'sum') * 1000, 1) ?></td>
-            <td><?= round($stat->fetch($timerId, 'avg') * 1000, 1) ?></td>
-            <td><?= $stat->fetch($timerId, 'count') ?></td>
-            <td><?= $stat->fetch($timerId, 'emalloc') ?></td>
-            <td><?= $stat->fetch($timerId, 'realmem') ?></td>
+        <tr data-tt-id="<?= $timerId ?>" data-tt-parent-id="<?= $this->getParentTimerId($timerId) ?>">
+            <td>
+                <?= $this->renderTimerId($stat->fetch($timerId, 'id')) ?>
+            </td>
+            <td class="number">
+                <?= $format->formatTime($stat->fetch($timerId, 'sum')) ?>
+                <div class="timer-line" style="width: <?= $block->getTimerLength($timerId) ?>%;"></div>
+            </td>
+            <td class="number"><?= $format->formatTime($stat->fetch($timerId, 'avg')) ?></td>
+            <td class="number"><?= $stat->fetch($timerId, 'count') ?></td>
         </tr>
     <?php endforeach ?>
 </table>
+<script>
+    require([
+        'jquery',
+        'Mirasvit_Profiler/js/lib/jquery.treetable'
+    ], function ($) {
+        $('#profiler-table').treetable({expandable: true});
+    });
+</script>

@@ -28,7 +28,7 @@
     </div>
 
     <?php foreach ($this->getTabs() as $key => $tab): ?>
-        <div data-tab-content="<?= $key ?>">
+        <div class="mirasvit-profiler__container-tab-content" data-tab-content="<?= $key ?>">
             <?= $tab->toHtml() ?>
         </div>
     <?php endforeach ?>

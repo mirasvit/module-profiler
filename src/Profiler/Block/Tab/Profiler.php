@@ -40,6 +40,20 @@ class Profiler extends Template implements TabInterface
     public function renderTimerId($timerId)
     {
         $nestingSep = preg_quote('->', '/');
-        return preg_replace('/.+?' . $nestingSep . '/', '&middot;&nbsp;&nbsp;', $timerId);
+        return preg_replace('/.+?' . $nestingSep . '/', '', $timerId);
+    }
+
+    public function getParentTimerId($timerId)
+    {
+        $timerId = explode('->', $timerId);
+        array_pop($timerId);
+
+        return implode('->', $timerId);
+    }
+
+    public function getTimerLength($timerId)
+    {
+        $total = microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'];
+        return round($this->getStat()->fetch($timerId, 'sum') / $total * 100, 2);
     }
 }
