@@ -8,4 +8,13 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Mirasvit\Profiler\Block\Container">
+        <arguments>
+            <argument name="tabs" xsi:type="array">
+                <item name="profilerTab" xsi:type="object">Mirasvit\Profiler\Block\Tab\Profiler</item>
+                <item name="sqlTab" xsi:type="object">Mirasvit\Profiler\Block\Tab\Sql</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

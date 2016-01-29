@@ -13,17 +13,54 @@
     font-size: 1.2rem;
   }
 
+  .mirasvit-profiler__container-toolbar {
+    height: 40px;
+    width: 100%;
+    background: #d8d8d8;
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
   .mirasvit-profiler__container-tabs {
     list-style: none;
     padding: 0;
     margin: 0;
-    border-bottom: 1px solid #eee;
+    border: none;
 
     > li {
-      padding: 1rem 3rem;
+      padding: 0.8rem 2.5rem 1rem 2.5rem;
       display: inline-block;
-      border: 1px solid #eee;
-      margin: 0 1rem -1px 0;
+      border: none;
+      margin: 3px 0 0 1.5rem;
+      background: transparent;
+      border-top: 3px solid transparent;
+      font-weight: bold;
+
+      &:hover {
+        background: #F0EFEF;
+        border-top: 3px solid #357CA5;
+        cursor: pointer;
+      }
+
+      &._active {
+        background: #fff;
+        border-top: 3px solid #357CA5;
+      }
+    }
+  }
+
+  .mirasvit-profiler__container-info {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+
+    .mirasvit-profiler__container-info-item {
+      margin-left: 3rem;
+      display: inline-block;
+
+      .fa {
+        margin-right: 5px;
+      }
     }
   }
 

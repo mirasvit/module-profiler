@@ -8,22 +8,28 @@ class Container extends Template
 {
     protected $_template = 'container.phtml';
 
+    /**
+     * @var array
+     */
     protected $tabs = [];
 
+    /**
+     * @var TemplateContext
+     */
+    protected $context;
+
     public function __construct(
-        TemplateContext $context,
+        TemplateContext $templateContext,
+        Context $context,
         Tab\Profiler $tabProfiler,
         Tab\Sql $tabSql,
         array $data = [],
         array $tabs = []
     ) {
+        $this->context = $context;
+        $this->tabs = $tabs;
 
-        $this->tabs = [
-            $tabProfiler,
-            $tabSql
-        ];
-
-        parent::__construct($context, $data);
+        parent::__construct($templateContext, $data);
     }
 
     /**
@@ -34,18 +40,27 @@ class Container extends Template
         return $this->tabs;
     }
 
+    /**
+     * @return float
+     */
+    public function getRequestTime()
+    {
+        return microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'];
+    }
 
+    /**
+     * @return int
+     */
+    public function getDbTotalNumQueries()
+    {
+        return $this->context->getDbProfiler()->getTotalNumQueries();
+    }
 
-//    public function setStat(Stat $stat)
-//    {
-//        $this->stat = $stat;
-//    }
-//
-//    /**
-//     * @return \Magento\Framework\Profiler\Driver\Standard\Stat
-//     */
-//    public function getStat()
-//    {
-//        return $this->stat;
-//    }
+    /**
+     * @return int
+     */
+    public function getDbTotalElapsedSecs()
+    {
+        return $this->context->getDbProfiler()->getTotalElapsedSecs();
+    }
 }
