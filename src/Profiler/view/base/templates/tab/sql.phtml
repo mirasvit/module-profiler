@@ -2,62 +2,65 @@
 /** @var \Mirasvit\Profiler\Block\Tab\Sql $block */
 
 $profiler = $block->getDbProfiler();
-$totalTime = $profiler->getTotalElapsedSecs() * 1000;
+$totalTime = $profiler->getTotalElapsedSecs();
 $slowQueries = $block->getSlowQueries();
+
+/** @var \Mirasvit\Profiler\Helper\Format $format */
+$format = $this->helper('Mirasvit\Profiler\Helper\Format');
 
 ?>
 <table cellpadding="0" cellspacing="0">
     <tr>
-        <th><?=__('Total Time') ?></th>
-        <td><?= round($totalTime) ?> ms</td>
+        <th><?= __('Total Time') ?></th>
+        <td><?= $format->formatTime($totalTime) ?> ms</td>
     </tr>
     <tr>
-        <th><?=__('Total Queries') ?></th>
+        <th><?= __('Total Queries') ?></th>
         <td><?= $profiler->getTotalNumQueries() ?></td>
     </tr>
 </table>
 
+<div class="mirasvit-prifiler-tab-sql__timeline">
+    <?php /** @var $query Zend_Db_Profiler_Query */ ?>
+    <?php foreach ($profiler->getQueryProfiles() as $query): ?>
+        <div style="width: <?= ($query->getElapsedSecs() / $profiler->getTotalElapsedSecs() * 100) ?>%"></div>
+    <?php endforeach ?>
+</div>
+
 <h3>Slow Queries</h3>
-<table cellpadding="0" cellspacing="0">
+
+<table cellpadding="0" cellspacing="0" class="wide">
     <tr>
-        <th><?=__('SQL Query') ?></th>
-        <th><?=__('Time (ms)') ?></th>
+        <th><?= __('SQL Query') ?></th>
+        <th><?= __('Time (ms)') ?></th>
         <th>%</th>
     </tr>
     <?php foreach ($slowQueries as $queryId => $time): ?>
         <?php $query = $profiler->getQueryProfile($queryId) ?>
         <tr>
-            <td><?= \SqlFormatter::highlight($query->getQuery()) ?></td>
-            <td><?= round($time * 1000, 1) ?></td>
-            <td><?= round($time / $totalTime * 100, 1) ?>%</td>
+            <td><?= \SqlFormatter::format($query->getQuery()) ?></td>
+            <td class="number"><?= $format->formatTime($time) ?></td>
+            <td class="number"><?= round($time / $totalTime * 100, 1) ?>%</td>
         </tr>
     <?php endforeach ?>
 </table>
 
+<h3>All Queries</h3>
 
-<?php $color = 'f00' ?>
-<div style="width: 100%; background: #eee; height: 20px;">
-    <?php /** @var $query Zend_Db_Profiler_Query */ ?>
-    <?php foreach ($profiler->getQueryProfiles() as $query): ?>
-        <?php $query->getStartedMicrotime() ?>
-        <?php $color = ($color == 'f00') ? '0f0' : 'f00'; ?>
-        <div style="height: 20px; float:left;;background: #<?=$color ?>; width: <?=($query->getElapsedSecs()/$profiler->getTotalElapsedSecs()*100) ?>%">
-
-        </div>
-    <?php endforeach ?>
-</div>
-
-<table cellpadding="0" cellspacing="0" width="100%">
+<?php $idx = 0 ?>
+<table cellpadding="0" cellspacing="0" class="wide">
     <tr>
+        <th>#</th>
         <th>Time (ms)</th>
         <th>SQL Query</th>
         <th>Query Params</th>
     </tr>
     <?php foreach ($profiler->getQueryProfiles() as $query): ?>
         <tr>
-            <td><?= round($query->getElapsedSecs() * 1000) ?></td>
+            <td class="number"><?= ++$idx ?></td>
+            <td class="number"><?= $format->formatTime($query->getElapsedSecs()) ?></td>
             <td><?= \SqlFormatter::format($query->getQuery()) ?></td>
-            <td><?= print_r($query->getQueryParams(), true) ?></td>
+            <td><?= json_encode($query->getQueryParams()) ?></td>
         </tr>
     <?php endforeach ?>
 </table>
