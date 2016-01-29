@@ -6,20 +6,25 @@ $stat = $block->getStat();
 /** @var \Mirasvit\Profiler\Helper\Format $format */
 $format = $this->helper('Mirasvit\Profiler\Helper\Format');
 ?>
-
+<div id="profiler-treshold"></div>
+<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
 <table cellpadding="0" cellspacing="0" id="profiler-table" class="wide">
+    <thead>
     <tr>
         <th><?= __('Timer Id') ?></th>
         <th><?= __('Time (ms)') ?></th>
         <th><?= __('Avg (ms)') ?></th>
         <th><?= __('Cnt') ?></th>
     </tr>
+    </thead>
+    <tbody>
+    <?php $idx = 0 ?>
     <?php foreach ($stat->getFilteredTimerIds() as $timerId): ?>
         <tr data-tt-id="<?= $timerId ?>" data-tt-parent-id="<?= $this->getParentTimerId($timerId) ?>">
             <td>
                 <?= $this->renderTimerId($stat->fetch($timerId, 'id')) ?>
             </td>
-            <td class="number">
+            <td class="number" data-filtrable="<?= $stat->fetch($timerId, 'sum') * 1000 ?>">
                 <?= $format->formatTime($stat->fetch($timerId, 'sum')) ?>
                 <div class="timer-line" style="width: <?= $block->getTimerLength($timerId) ?>%;"></div>
             </td>
@@ -27,12 +32,48 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
             <td class="number"><?= $stat->fetch($timerId, 'count') ?></td>
         </tr>
     <?php endforeach ?>
+    </tbody>
 </table>
 <script>
     require([
         'jquery',
-        'Mirasvit_Profiler/js/lib/jquery.treetable'
+        'jquery/ui',
+        'Mirasvit_Profiler/js/lib/jquery.treetable',
+        'Mirasvit_Profiler/js/lib/jquery.tablesorter',
+        'Mirasvit_Profiler/js/lib/jquery.filtertable'
     ], function ($) {
-        $('#profiler-table').treetable({expandable: true});
+        var $table = $('#profiler-table');
+        $table.treetable({expandable: true});
+        $table.tablesorter({});
+
+        $table.filterTable({
+            callback: function (term, table) {
+                $table.treetable('expandAll');
+            }
+        });
+
+        $table.bind("sortStart", function () {
+            $table.treetable('expandAll');
+        });
+
+        $('#profiler-treshold').slider({
+            min: 0,
+            value: 0,
+            max: <?=$block->getTotalTime() * 1000 ?>,
+            slide: function (event, ui) {
+                $table.treetable('expandAll');
+                $('[data-filtrable]', $table).each(function (i, td) {
+                    var value = $(td).attr('data-filtrable');
+                    console.log(value);
+                    if (value > ui.value) {
+                        $(td).parent().show();
+                    } else {
+                        $(td).parent().hide();
+                    }
+                });
+
+                $("#amount").val(ui.value);
+            }
+        });
     });
 </script>

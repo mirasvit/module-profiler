@@ -56,4 +56,9 @@ class Profiler extends Template implements TabInterface
         $total = microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'];
         return round($this->getStat()->fetch($timerId, 'sum') / $total * 100, 2);
     }
+
+    public function getTotalTime()
+    {
+        return microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'];
+    }
 }

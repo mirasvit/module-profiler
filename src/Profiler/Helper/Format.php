@@ -16,6 +16,6 @@ class Format extends AbstractHelper
             $number *= 1000;
         }
 
-        return number_format($number, 1);
+        return number_format($number, 1, '.', '');
     }
 }
