@@ -27,40 +27,37 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
     <?php endforeach ?>
 </div>
 
-<h3>Slow Queries</h3>
-
-<table cellpadding="0" cellspacing="0" class="wide">
-    <tr>
-        <th><?= __('SQL Query') ?></th>
-        <th><?= __('Time (ms)') ?></th>
-        <th>%</th>
-    </tr>
-    <?php foreach ($slowQueries as $queryId => $time): ?>
-        <?php $query = $profiler->getQueryProfile($queryId) ?>
-        <tr>
-            <td><?= \SqlFormatter::format($query->getQuery()) ?></td>
-            <td class="number"><?= $format->formatTime($time) ?></td>
-            <td class="number"><?= round($time / $totalTime * 100, 1) ?>%</td>
-        </tr>
-    <?php endforeach ?>
-</table>
-
-<h3>All Queries</h3>
+<div class="mirasvit-threshold" id="sql-table-threshold">
+    <div class="value"></div>
+</div>
 
 <?php $idx = 0 ?>
-<table cellpadding="0" cellspacing="0" class="wide">
+<table cellpadding="0" cellspacing="0" class="wide" id="sql-table"  data-threshold="#sql-table-threshold">
+    <thead>
     <tr>
         <th>#</th>
         <th>Time (ms)</th>
         <th>SQL Query</th>
         <th>Query Params</th>
     </tr>
+    </thead>
+    <tbody>
     <?php foreach ($profiler->getQueryProfiles() as $query): ?>
-        <tr>
+        <tr data-threshold-value="<?= $query->getElapsedSecs() * 1000 ?>">
             <td class="number"><?= ++$idx ?></td>
             <td class="number"><?= $format->formatTime($query->getElapsedSecs()) ?></td>
             <td><?= \SqlFormatter::format($query->getQuery()) ?></td>
             <td><?= json_encode($query->getQueryParams()) ?></td>
         </tr>
     <?php endforeach ?>
+    </tbody>
 </table>
+
+<script>
+    require([
+        'jquery',
+        'Mirasvit_Profiler/js/table'
+    ], function ($) {
+        $('#sql-table').profilerTable({});
+    });
+</script>

@@ -1,5 +1,12 @@
-.mirasvit-profiler__container {
+.mirasvit-profiler-text {
   font-size: 1.2rem;
+  line-height: 1.6rem;
+  font-family: Arial;
+  color: #333;
+}
+
+.mirasvit-profiler__container {
+  .mirasvit-profiler-text();
 
   pre {
     background: transparent !important;
@@ -25,11 +32,22 @@
       td, th {
         padding: 0.5rem 1rem;
         text-align: left;
-        border: 1px solid #ddd;
+        border-left: 0.1rem dashed #d6d6d6;
+        border-right: 0.1rem dashed #d6d6d6;
+        border-bottom: 0.1rem solid #d6d6d6;
         background: #fff;
+        transition: background-color 0.1s linear;
 
         &.number {
           text-align: right;
+        }
+
+        &:first-child {
+          border-left-style: solid;
+        }
+
+        &:last-child {
+          border-right-style: solid;
         }
       }
 
@@ -37,17 +55,45 @@
         background: #f3f4f5;
       }
 
-
       &:hover {
         td {
-          background: #CAECFF !important;
+          background: #e5f7fe !important;
         }
       }
 
       th {
         white-space: nowrap;
-        background: #dedede;
+        background: #514943;
+        color: #fff;
+        border: 1px solid #8a837f;
+        border-bottom: none;
       }
+    }
+  }
+
+  p {
+    margin: 0 0 1rem 0;
+    padding: 0;
+  }
+
+  input[type="text"], input[type="search"] {
+    .mirasvit-profiler-text();
+    padding: 0.4rem;
+    margin: 0;
+    border: 1px solid #adadad;
+    height: auto;
+  }
+
+  .ui-slider {
+    height: 0.4rem;
+    background: #96918E;
+    .ui-slider-handle {
+      height: 1rem;
+      width: 1rem;
+      border-radius: 1rem;
+      background: #EB5202;
+      display: block;
+      top: -0.3rem;
     }
   }
 }

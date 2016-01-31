@@ -1,5 +1,5 @@
 <?php
-namespace Mirasvit\Profiler\Model\Driver\Standard\Output;
+namespace Mirasvit\Profiler\Model\Driver\Output;
 
 use Magento\Framework\Profiler\Driver\Standard\Stat;
 use Magento\Framework\Profiler\Driver\Standard\OutputInterface;
@@ -17,11 +17,18 @@ class Html implements OutputInterface
         /** @var \Magento\Framework\View\LayoutInterface $layout */
         $layout = $objectManager->create('\Magento\Framework\View\LayoutInterface');
 
+        $storage = $objectManager->get('\Mirasvit\Profiler\Model\Storage');
+
         $context = $objectManager->get('\Mirasvit\Profiler\Block\Context');
         $context->setProfilerStat($stat);
 
-        echo $layout->createBlock('\Mirasvit\Profiler\Block\Container')
-            ->toHtml();
+//        $storage->dump();
 
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
+
+        if (!$isAjax) {
+            echo $layout->createBlock('\Mirasvit\Profiler\Block\Container')
+                ->toHtml();
+        }
     }
 }

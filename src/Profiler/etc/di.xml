@@ -17,4 +17,13 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Mirasvit\Profiler\Model\Profile\Pool">
+        <arguments>
+            <argument name="profiles" xsi:type="array">
+                <item name="magento" xsi:type="object">Mirasvit\Profiler\Model\Profile\Magento</item>
+                <item name="database" xsi:type="object">Mirasvit\Profiler\Model\Profile\Database</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

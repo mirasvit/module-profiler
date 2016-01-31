@@ -61,7 +61,6 @@ class Config
         $config->save();
 
         $this->enableDbProfiler();
-        $this->enableMageProfiler();
 
         return true;
     }
@@ -73,24 +72,6 @@ class Config
         $config->save();
 
         $this->disableDbProfiler();
-        $this->disableMageProfiler();
-
-        return true;
-    }
-
-    /**
-     * @return bool
-     */
-    public function enableMageProfiler()
-    {
-        $this->disableMageProfiler();
-
-        $path = BP . DIRECTORY_SEPARATOR . '.htaccess';
-        if (file_exists($path)) {
-            $content = file_get_contents($path);
-            $content .= PHP_EOL . self::HTACCESS_ENV;
-            file_put_contents($path, $content);
-        }
 
         return true;
     }
@@ -108,21 +89,6 @@ class Config
             'enabled' => true,
         ];
         $this->deploymentConfigWriter->saveConfig([ConfigFilePool::APP_ENV => $env], true);
-
-        return true;
-    }
-
-    /**
-     * @return bool
-     */
-    public function disableMageProfiler()
-    {
-        $path = BP . DIRECTORY_SEPARATOR . '.htaccess';
-        if (file_exists($path)) {
-            $content = file_get_contents($path);
-            $content = str_replace(self::HTACCESS_ENV, '', $content);
-            file_put_contents($path, $content);
-        }
 
         return true;
     }

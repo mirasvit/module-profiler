@@ -1,16 +1,15 @@
 .mirasvit-profiler__container {
   background: #fff;
-  font-size: 1.2rem;
-  padding: 2rem 0;
   position: relative;
   z-index: 100000;
 
-
   .mirasvit-profiler__container-toolbar {
-    height: 40px;
+    height: 41px;
     width: 100%;
-    background: #d8d8d8;
+    background: #373330;
+    border-top: 1px solid #736963;
     position: relative;
+    color: #AAA6A0;
   }
 
   .mirasvit-profiler__container-tabs {
@@ -24,20 +23,21 @@
       padding: 0.8rem 2.5rem 1rem 2.5rem;
       display: inline-block;
       border: none;
-      margin: 3px 1rem 0 0;
+      margin: 0.3rem 0.3rem 0 0;
       background: transparent;
-      border-top: 3px solid transparent;
+      border-top: 0.3rem solid transparent;
       font-weight: bold;
 
       &:hover {
-        background: #F0EFEF;
-        border-top: 3px solid #357CA5;
+        background: #524D49;
+        border-top: 0.3rem solid #eb5202;
         cursor: pointer;
       }
 
       &._active {
-        background: #fff;
-        border-top: 3px solid #357CA5;
+        background: #524D49;
+        color: #fff;
+        border-top: 0.3rem solid #eb5202;
       }
     }
   }
