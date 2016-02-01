@@ -29,6 +29,11 @@ class Sql extends Template implements TabInterface
         return __('Sql');
     }
 
+    public function isEnabled()
+    {
+        return is_array($this->getDbProfiler()->getQueryProfiles());
+    }
+
     /**
      * @return \Zend_Db_Profiler
      */

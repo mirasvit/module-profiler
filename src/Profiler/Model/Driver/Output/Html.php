@@ -14,6 +14,13 @@ class Html implements OutputInterface
     {
         $objectManager = ObjectManager::getInstance();
 
+        /** @var \Mirasvit\Profiler\Model\Config $config */
+        $config = $objectManager->get('\Mirasvit\Profiler\Model\Config');
+
+        if (!$config->isEnabled()) {
+            return;
+        }
+
         /** @var \Magento\Framework\View\LayoutInterface $layout */
         $layout = $objectManager->create('\Magento\Framework\View\LayoutInterface');
 
