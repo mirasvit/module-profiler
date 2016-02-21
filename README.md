@@ -17,10 +17,10 @@ bin/magento setup:static-content:deploy
 [http://profiler.m2.mirasvit.com/](http://profiler.m2.mirasvit.com/)
 
 ## Screenshots
-### Magento profiler
+### Magento2 Profiler
 ![](http://mirasvit.com/media/profiler/profiler.png)
 
-### Database profiler
+### Magento2 Database Profiler
 ![](http://mirasvit.com/media/profiler/db.png)
 
 ## Licence
