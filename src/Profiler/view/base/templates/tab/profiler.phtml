@@ -44,44 +44,4 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
     ], function ($) {
         $('#profiler-table').profilerTable({});
     });
-    //    require([
-    //        'jquery',
-    //        'jquery/ui',
-    //        'Mirasvit_Profiler/js/lib/jquery.treetable',
-    //        'Mirasvit_Profiler/js/lib/jquery.tablesorter',
-    //        'Mirasvit_Profiler/js/lib/jquery.filtertable'
-    //    ], function ($) {
-    //        var $table = $('#profiler-table');
-    //        $table.treetable({expandable: true});
-    //        $table.tablesorter({});
-    //
-    //        $table.filterTable({
-    //            callback: function (term, table) {
-    //                $table.treetable('expandAll');
-    //            }
-    //        });
-    //
-    //        $table.bind("sortStart", function () {
-    //            $table.treetable('expandAll');
-    //        });
-    //
-    //        $('#profiler-threshold').slider({
-    //            min: 0,
-    //            value: 0,
-    //            max: <?//=$block->getTotalTime() * 1000 ?>//,
-    //            slide: function (event, ui) {
-    //                $table.treetable('expandAll');
-    //                $('[data-filtrable]', $table).each(function (i, td) {
-    //                    var value = $(td).attr('data-filtrable');
-    //                    if (value > ui.value) {
-    //                        $(td).parent().show();
-    //                    } else {
-    //                        $(td).parent().hide();
-    //                    }
-    //                });
-    //
-    //                $("#profiler-threshold .value").html(ui.value + " ms");
-    //            }
-    //        });
-    //    });
 </script>
