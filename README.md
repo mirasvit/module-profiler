@@ -13,6 +13,17 @@ bin/magento mirasvit:profiler:enable
 rm -rf pub/static/*; rm -rf var/view_preprocessed/*;
 bin/magento setup:static-content:deploy
 ```
+
+## Usage
+
+```
+bin/magento mirasvit:profiler:enable # Enable profiler
+bin/magento mirasvit:profiler:disable # Disable profiler
+bin/magento mirasvit:profiler:status # Current status
+bin/magento mirasvit:profiler:allow-ips 127.0.0.1 192.268.22.11 # Allow only specified IPs
+bin/magento mirasvit:profiler:allow-ips --none # Remove IP restriction
+```
+
 ## Demo
 [http://profiler.m2.mirasvit.com/](http://profiler.m2.mirasvit.com/)
 

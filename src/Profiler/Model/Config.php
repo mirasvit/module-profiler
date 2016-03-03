@@ -107,4 +107,27 @@ class Config
 
         return true;
     }
+
+    /**
+     * @param string $addresses
+     * @return bool
+     */
+    public function setAddresses($addresses)
+    {
+        $config = $this->configFactory->create();
+        $config->setDataByPath('profiler/general/addresses', $addresses);
+        $config->save();
+
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAddressInfo()
+    {
+        $addresses = $this->scopeConfig->getValue('profiler/general/addresses');
+
+        return array_filter(explode(',', $addresses));
+    }
 }

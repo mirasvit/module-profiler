@@ -21,6 +21,12 @@ class Html implements OutputInterface
             return;
         }
 
+        $addresses = $config->getAddressInfo();
+
+        if (count($addresses) && !in_array($_SERVER['REMOTE_ADDR'], $addresses)) {
+            return;
+        }
+
         /** @var \Magento\Framework\View\LayoutInterface $layout */
         $layout = $objectManager->create('\Magento\Framework\View\LayoutInterface');
 

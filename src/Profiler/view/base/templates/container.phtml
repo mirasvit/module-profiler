@@ -16,6 +16,9 @@
 
         <div class="mirasvit-profiler__container-info">
             <div class="mirasvit-profiler__container-info-item">
+                <small><?= $_SERVER['REMOTE_ADDR'] ?></small>
+            </div>
+            <div class="mirasvit-profiler__container-info-item">
                 <i class="fa fa-fw fa-clock-o"></i>
                 <?= round($block->getRequestTime() * 1000, 1) ?> ms
             </div>

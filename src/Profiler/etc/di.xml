@@ -5,6 +5,8 @@
             <argument name="commands" xsi:type="array">
                 <item name="ProfilerEnableCommand" xsi:type="object">Mirasvit\Profiler\Console\Command\EnableCommand</item>
                 <item name="ProfilerDisableCommand" xsi:type="object">Mirasvit\Profiler\Console\Command\DisableCommand</item>
+                <item name="ProfilerAllowIpsCommand" xsi:type="object">Mirasvit\Profiler\Console\Command\AllowIpsCommand</item>
+                <item name="ProfilerStatusCommand" xsi:type="object">Mirasvit\Profiler\Console\Command\StatusCommand</item>
             </argument>
         </arguments>
     </type>
