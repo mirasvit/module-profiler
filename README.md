@@ -7,11 +7,12 @@ Log in to the Magento server, go to your Magento install dir and run these comma
 composer config repositories.mirasvit-profiler vcs https://github.com/mirasvit/module-profiler
 composer require mirasvit/module-profiler:dev-master
 
-bin/magento setup:upgrade
-bin/magento mirasvit:profiler:enable
+php -f bin/magento module:enable Mirasvit_Profiler
+php -f bin/magento setup:upgrade
+php -f bin/magento mirasvit:profiler:enable
 
 rm -rf pub/static/*; rm -rf var/view_preprocessed/*;
-bin/magento setup:static-content:deploy
+php -f bin/magento setup:static-content:deploy
 ```
 
 ## Usage
