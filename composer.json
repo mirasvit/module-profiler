@@ -15,7 +15,7 @@
   ],
   "autoload": {
     "files": [
-      "src/Profiler/registration.php"
+      "./registration.php"
     ],
     "psr-4": {
       "Mirasvit\\Profiler\\": "src/Profiler"
