@@ -18,11 +18,11 @@ php -f bin/magento setup:static-content:deploy
 ## Usage
 
 ```
-bin/magento mirasvit:profiler:enable # Enable profiler
-bin/magento mirasvit:profiler:disable # Disable profiler
-bin/magento mirasvit:profiler:status # Current status
-bin/magento mirasvit:profiler:allow-ips 127.0.0.1 192.268.22.11 # Allow only specified IPs
-bin/magento mirasvit:profiler:allow-ips --none # Remove IP restriction
+php -f bin/magento mirasvit:profiler:enable # Enable profiler
+php -f bin/magento mirasvit:profiler:disable # Disable profiler
+php -f bin/magento mirasvit:profiler:status # Current status
+php -f bin/magento mirasvit:profiler:allow-ips 127.0.0.1 192.268.22.11 # Allow only specified IPs
+php -f bin/magento mirasvit:profiler:allow-ips --none # Remove IP restriction
 ```
 
 ## Demo
