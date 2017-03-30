@@ -7,6 +7,9 @@ use Magento\Framework\App\ResourceConnection;
 
 class Sql extends Template implements TabInterface
 {
+    /**
+     * @var string
+     */
     protected $_template = 'tab/sql.phtml';
 
     /**
@@ -24,11 +27,17 @@ class Sql extends Template implements TabInterface
         parent::__construct($context, $data);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getLabel()
     {
         return __('Sql');
     }
 
+    /**
+     * @return bool
+     */
     public function isEnabled()
     {
         return is_array($this->getDbProfiler()->getQueryProfiles());

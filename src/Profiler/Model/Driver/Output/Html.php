@@ -30,12 +30,12 @@ class Html implements OutputInterface
         /** @var \Magento\Framework\View\LayoutInterface $layout */
         $layout = $objectManager->create('\Magento\Framework\View\LayoutInterface');
 
-        $storage = $objectManager->get('\Mirasvit\Profiler\Model\Storage');
+        //        $storage = $objectManager->get('\Mirasvit\Profiler\Model\Storage');
 
         $context = $objectManager->get('\Mirasvit\Profiler\Block\Context');
         $context->setProfilerStat($stat);
 
-//        $storage->dump();
+        //        $storage->dump();
 
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
 

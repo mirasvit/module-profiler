@@ -6,6 +6,9 @@ use Magento\Framework\View\Element\Template;
 
 class Container extends Template
 {
+    /**
+     * @var string
+     */
     protected $_template = 'container.phtml';
 
     /**
@@ -21,8 +24,6 @@ class Container extends Template
     public function __construct(
         TemplateContext $templateContext,
         Context $context,
-        Tab\Profiler $tabProfiler,
-        Tab\Sql $tabSql,
         array $data = [],
         array $tabs = []
     ) {

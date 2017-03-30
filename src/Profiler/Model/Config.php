@@ -31,12 +31,6 @@ class Config
      */
     protected $configFactory;
 
-    /**
-     * @param ScopeConfigInterface $scopeConfig
-     * @param DeploymentConfigWriter $deploymentConfigWriter
-     * @param DeploymentConfigReader $deploymentConfigReader
-     * @param ConfigFactory $configFactory
-     */
     public function __construct(
         DeploymentConfigWriter $deploymentConfigWriter,
         DeploymentConfigReader $deploymentConfigReader,
@@ -49,11 +43,17 @@ class Config
         $this->configFactory = $configFactory;
     }
 
+    /**
+     * @return bool
+     */
     public function isEnabled()
     {
         return (bool)$this->scopeConfig->getValue('profiler/general/enable');
     }
 
+    /**
+     * @return bool
+     */
     public function enableProfiler()
     {
         $config = $this->configFactory->create();
@@ -65,6 +65,9 @@ class Config
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function disableProfiler()
     {
         $config = $this->configFactory->create();

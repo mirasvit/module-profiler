@@ -7,6 +7,9 @@ use Mirasvit\Profiler\Block\Context;
 
 class Profiler extends Template implements TabInterface
 {
+    /**
+     * @var string
+     */
     protected $_template = 'tab/profiler.phtml';
 
     /**
@@ -24,6 +27,9 @@ class Profiler extends Template implements TabInterface
         parent::__construct($templateContext, $data);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getLabel()
     {
         return __('Profiler');
@@ -37,12 +43,21 @@ class Profiler extends Template implements TabInterface
         return $this->context->getProfilerStat();
     }
 
+    /**
+     * @param int $timerId
+     * @return string
+     */
     public function renderTimerId($timerId)
     {
         $nestingSep = preg_quote('->', '/');
+
         return preg_replace('/.+?' . $nestingSep . '/', '', $timerId);
     }
 
+    /**
+     * @param int $timerId
+     * @return string
+     */
     public function getParentTimerId($timerId)
     {
         $timerId = explode('->', $timerId);
@@ -51,12 +66,20 @@ class Profiler extends Template implements TabInterface
         return implode('->', $timerId);
     }
 
+    /**
+     * @param int $timerId
+     * @return float
+     */
     public function getTimerLength($timerId)
     {
         $total = microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'];
+
         return round($this->getStat()->fetch($timerId, 'sum') / $total * 100, 2);
     }
 
+    /**
+     * @return float
+     */
     public function getTotalTime()
     {
         return microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'];

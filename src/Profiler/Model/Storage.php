@@ -16,6 +16,9 @@ class Storage
         $this->pool = $profilePool;
     }
 
+    /**
+     * @return void
+     */
     public function dump()
     {
         $dump = [];
@@ -36,6 +39,9 @@ class Storage
         file_put_contents($file, $yaml);
     }
 
+    /**
+     * @return void
+     */
     public function load()
     {
 

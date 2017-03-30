@@ -3,14 +3,20 @@ namespace Mirasvit\Profiler\Model\Profile;
 
 class Pool
 {
-    protected $profiles;
+    /**
+     * @var array
+     */
+    private $profiles;
 
     public function __construct(
-        $profiles = array()
+        $profiles = []
     ) {
         $this->profiles = $profiles;
     }
 
+    /**
+     * @return array
+     */
     public function getProfiles()
     {
         return $this->profiles;
