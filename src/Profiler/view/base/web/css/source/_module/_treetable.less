@@ -1,46 +1,46 @@
 table.treetable {
-  span.indenter {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    text-align: right;
-    user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    -webkit-user-select: none;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    width: 19px;
-    margin-right: 6px;
+    span.indenter {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        text-align: right;
+        user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        -webkit-user-select: none;
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+        width: 19px;
+        margin-right: 6px;
 
-    a {
-      background-position: left center;
-      background-repeat: no-repeat;
-      display: inline-block;
-      text-decoration: none;
-      width: 19px;
-      outline: none;
+        a {
+            background-position: left center;
+            background-repeat: no-repeat;
+            display: inline-block;
+            text-decoration: none;
+            width: 19px;
+            outline: none;
+        }
     }
-  }
-  tr {
-    &.collapsed span.indenter a {
+    tr {
+        &.collapsed span.indenter a {
 
-      &:after {
-        color: #666;
-        content: "\f0da";
-        font: normal normal normal 14px/1 FontAwesome;
-      }
-    }
+            &:after {
+                color: #666;
+                content: "\f0da";
+                font: normal normal normal 14px/1 FontAwesome;
+            }
+        }
 
-    &.expanded span.indenter a {
-      &:after {
-        color: #666;
-        content: "\f0d7";
-        font: normal normal normal 14px/1 FontAwesome;
-      }
+        &.expanded span.indenter a {
+            &:after {
+                color: #666;
+                content: "\f0d7";
+                font: normal normal normal 14px/1 FontAwesome;
+            }
+        }
     }
-  }
 }
 

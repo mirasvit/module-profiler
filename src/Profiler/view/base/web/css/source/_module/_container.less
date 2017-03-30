@@ -1,11 +1,12 @@
-.mirasvit-profiler__container {
+
+&__container {
     background: #fff;
     position: relative;
     z-index: 100000;
     font-size: 12px !important;
     line-height: 16px !important;
 
-    .mirasvit-profiler__container-toolbar {
+    &-toolbar {
         height: 41px;
         width: 100%;
         background: #373330;
@@ -14,15 +15,15 @@
         color: #AAA6A0;
     }
 
-    .mirasvit-profiler__container-tabs {
+    &-tabs {
         list-style: none;
         padding: 0;
         margin: 0;
         border: none;
-        margin-left: 3px;
+        margin-left: 10px;
 
         > li {
-            padding: 8px 25px 9px 25px;
+            padding: 9px 25px 10px 25px;
             display: inline-block;
             border: none;
             margin: 3px 3px 0 0;
@@ -32,7 +33,7 @@
 
             &:hover {
                 background: #524D49;
-                border-top: 0.3rem solid #eb5202;
+                border-top: 3px solid #eb5202;
                 cursor: pointer;
             }
 
@@ -44,16 +45,16 @@
         }
     }
 
-    .mirasvit-profiler__container-tab-content {
+    &-tab-content {
         padding: 2rem;
     }
 
-    .mirasvit-profiler__container-info {
+    &-info {
         position: absolute;
         top: 12px;
         right: 15px;
 
-        .mirasvit-profiler__container-info-item {
+        &-item {
             margin-left: 3rem;
             display: inline-block;
 
@@ -63,8 +64,4 @@
         }
     }
 
-}
-
-.mirasvit-profiler-clearfix {
-    .lib-clearfix();
 }

@@ -26,7 +26,6 @@ define([
                 $table.treetable('expandAll');
             });
 
-
             $table.filterTable({
                 callback: function (term, table) {
                     $table.treetable('expandAll');
@@ -48,8 +47,8 @@ define([
 
                 var $threshold = $($table.attr('data-threshold'));
                 $threshold.slider({
-                    min: min,
-                    max: max,
+                    min:   min,
+                    max:   max,
                     value: min,
                     slide: function (event, ui) {
                         $table.treetable('expandAll');

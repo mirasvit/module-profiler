@@ -64,4 +64,14 @@ class Container extends Template
     {
         return $this->context->getDbProfiler()->getTotalElapsedSecs();
     }
+
+    /**
+     * @return string
+     */
+    public function getStyles()
+    {
+        $file = dirname(dirname(__FILE__)) . '/view/base/web/css/module.css';
+
+        return file_get_contents($file);
+    }
 }

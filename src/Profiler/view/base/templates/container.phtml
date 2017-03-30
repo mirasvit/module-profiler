@@ -2,11 +2,15 @@
 /** @var \Mirasvit\Profiler\Block\Container $block */
 
 ?>
-<div class="mirasvit-profiler-clearfix"></div>
+<style>
+    <?= $block->getStyles() ?>
+</style>
 
-<div class="mirasvit-profiler__container">
-    <div class="mirasvit-profiler__container-toolbar">
-        <ul class="mirasvit-profiler__container-tabs" data-role="profiler-tabs">
+<div class="mst-profiler-clearfix"></div>
+
+<div class="mst-profiler__container">
+    <div class="mst-profiler__container-toolbar">
+        <ul class="mst-profiler__container-tabs" data-role="profiler-tabs">
             <?php foreach ($block->getTabs() as $key => $tab): ?>
                 <li data-tab="<?= $key ?>">
                     <?= $tab->getLabel() ?>
@@ -14,16 +18,16 @@
             <?php endforeach ?>
         </ul>
 
-        <div class="mirasvit-profiler__container-info">
-            <div class="mirasvit-profiler__container-info-item">
+        <div class="mst-profiler__container-info">
+            <div class="mst-profiler__container-info-item">
                 <small><?= $_SERVER['REMOTE_ADDR'] ?></small>
             </div>
-            <div class="mirasvit-profiler__container-info-item">
+            <div class="mst-profiler__container-info-item">
                 <i class="fa fa-fw fa-clock-o"></i>
                 <?= round($block->getRequestTime() * 1000, 1) ?> ms
             </div>
 
-            <div class="mirasvit-profiler__container-info-item">
+            <div class="mst-profiler__container-info-item">
                 <i class="fa fa-fw fa-database"></i>
                 <?= $block->getDbTotalNumQueries() ?> in <?= round($block->getDbTotalElapsedSecs() * 1000, 1) ?> ms
             </div>
@@ -31,7 +35,7 @@
     </div>
 
     <?php foreach ($this->getTabs() as $key => $tab): ?>
-        <div class="mirasvit-profiler__container-tab-content" data-tab-content="<?= $key ?>">
+        <div class="mst-profiler__container-tab-content" data-tab-content="<?= $key ?>">
             <?= $tab->toHtml() ?>
         </div>
     <?php endforeach ?>

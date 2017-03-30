@@ -23,14 +23,14 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
     </tr>
 </table>
 
-<div class="mirasvit-prifiler-tab-sql__timeline">
+<div class="mst-prifiler-tab-sql__timeline">
     <?php /** @var $query Zend_Db_Profiler_Query */ ?>
     <?php foreach ($profiler->getQueryProfiles() as $query): ?>
         <div style="width: <?= ($query->getElapsedSecs() / $profiler->getTotalElapsedSecs() * 100) ?>%"></div>
     <?php endforeach ?>
 </div>
 
-<div class="mirasvit-threshold" id="sql-table-threshold">
+<div class="mst-threshold" id="sql-table-threshold">
     <div class="value"></div>
 </div>
 
