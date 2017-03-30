@@ -232,19 +232,20 @@
   bottom: 0;
   left: 0;
 }
-.mst-profiler-tab-sql__timeline {
+.mst-profiler__timeline {
   height: 20px;
   width: 100%;
   overflow: hidden;
   border-radius: 3px;
+  margin-bottom: 5px;
 }
-.mst-profiler-tab-sql__timeline > div {
+.mst-profiler__timeline > div {
   height: 20px;
   float: left;
   min-width: 1px;
   background: #38C338;
 }
-.mst-profiler-tab-sql__timeline > div:nth-of-type(even) {
+.mst-profiler__timeline > div:nth-of-type(even) {
   background: #58D1FF;
 }
 .mst-profiler-clearfix:before,
