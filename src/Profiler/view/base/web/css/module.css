@@ -13,6 +13,7 @@
   border-top: 1px solid #736963;
   position: relative;
   color: #AAA6A0;
+  overflow: hidden;
 }
 .mst-profiler__container-tabs {
   list-style: none;
@@ -248,11 +249,11 @@
 .mst-profiler__timeline > div:nth-of-type(even) {
   background: #58D1FF;
 }
-.mst-profiler-clearfix:before,
-.mst-profiler-clearfix:after {
+.mst-profiler__clearfix:before,
+.mst-profiler__clearfix:after {
   content: '';
   display: table;
 }
-.mst-profiler-clearfix:after {
+.mst-profiler__clearfix:after {
   clear: both;
 }
