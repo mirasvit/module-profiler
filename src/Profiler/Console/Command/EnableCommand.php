@@ -2,6 +2,7 @@
 namespace Mirasvit\Profiler\Console\Command;
 
 use Magento\Framework\App\State;
+use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Mirasvit\Profiler\Model\Config;
@@ -39,7 +40,9 @@ class EnableCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->appState->setAreaCode('empty');
+        try{
+            $this->appState->setAreaCode('empty');
+        }catch (LocalizedException $e){}
 
         $this->config->enableProfiler();
     }
