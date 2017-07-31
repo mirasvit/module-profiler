@@ -21,6 +21,6 @@ class Magento implements ProfileInterface
      */
     public function getStat()
     {
-        return $_SERVER['MAGE_PROFILER_STAT'];
+        return $GLOBALS['MAGE_PROFILER_STAT'];
     }
 }
