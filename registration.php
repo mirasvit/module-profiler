@@ -1,12 +1,12 @@
 <?php
 if (PHP_SAPI != 'cli') {
-    $_SERVER['MAGE_PROFILER_STAT'] = new \Magento\Framework\Profiler\Driver\Standard\Stat();
+    $GLOBALS['MAGE_PROFILER_STAT'] = new \Magento\Framework\Profiler\Driver\Standard\Stat();
     \Magento\Framework\Profiler::applyConfig(
         [
             'drivers' => [
                 [
                     'output' => 'Mirasvit\Profiler\Model\Driver\Output\Html',
-                    'stat'   => $_SERVER['MAGE_PROFILER_STAT'],
+                    'stat'   => $GLOBALS['MAGE_PROFILER_STAT'],
                 ]
             ]
         ],
