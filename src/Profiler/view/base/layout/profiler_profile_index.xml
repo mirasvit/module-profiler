@@ -4,7 +4,8 @@
       label="Profiler">
     <body>
         <referenceContainer name="profiler">
-            <block class="Mirasvit\Profiler\Block\Profile\Listing" template="Mirasvit_Profiler::profile/listing.phtml" />
+            <block class="Mirasvit\Profiler\Block\Profile\Listing" template="Mirasvit_Profiler::profile/listing.phtml"
+                   cacheable="false"/>
         </referenceContainer>
     </body>
 </page>
