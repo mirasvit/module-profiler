@@ -24,6 +24,8 @@ php -f bin/magento mirasvit:profiler:allow-ips --none # Remove IP restriction
 ## Demo
 [http://profiler.m2.mirasvit.com/](http://profiler.m2.mirasvit.com/)
 
+[http://profiler.m2.mirasvit.com/profiler/profile/index/](http://profiler.m2.mirasvit.com/profiler/profile/index/)
+
 ## Screenshots
 ### Magento 2 Code Profiler and Database Profiler
 ![](http://mirasvit.com/media/profiler/v2.png)
