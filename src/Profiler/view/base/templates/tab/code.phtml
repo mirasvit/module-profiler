@@ -19,7 +19,7 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
     <i>Database Time</i>
 </div>
 
-<table id="profiler-table" data-threshold="#profiler-table-threshold">
+<table id="code-table">
     <thead>
     <tr>
         <th>Timer</th>
@@ -52,10 +52,7 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
     </tbody>
 </table>
 <script>
-    //    require([
-    //        'jquery',
-    //        'Mirasvit_Profiler/js/table'
-    //    ], function ($) {
-    //        $('#profiler-table').profilerTable({});
-    //    });
+    $(function () {
+        $("#code-table").tablesorter();
+    });
 </script>

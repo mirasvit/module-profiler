@@ -37,6 +37,7 @@ class Meta implements ProfileInterface
             'TIME'           => microtime(true),
             'EXECUTION_TIME' => $this->context->getExecutionTime(),
             'URL'            => $url,
+            'IP'             => $this->context->getClientIP(),
         ];
 
         return $dump;
