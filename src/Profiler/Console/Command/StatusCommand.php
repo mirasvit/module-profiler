@@ -14,7 +14,7 @@ class StatusCommand extends AbstractCommand
     /**
      * @var Config
      */
-    protected $config;
+    private $config;
 
     public function __construct(
         Config $config,

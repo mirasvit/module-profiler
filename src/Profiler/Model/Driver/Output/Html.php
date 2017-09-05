@@ -1,9 +1,11 @@
 <?php
+
 namespace Mirasvit\Profiler\Model\Driver\Output;
 
 use Magento\Framework\Profiler\Driver\Standard\Stat;
 use Magento\Framework\Profiler\Driver\Standard\OutputInterface;
 use Magento\Framework\App\ObjectManager;
+use Mirasvit\Profiler\Model\Storage;
 
 class Html implements OutputInterface
 {
@@ -15,7 +17,7 @@ class Html implements OutputInterface
         $objectManager = ObjectManager::getInstance();
 
         /** @var \Mirasvit\Profiler\Model\Config $config */
-        $config = $objectManager->get('\Mirasvit\Profiler\Model\Config');
+        $config = $objectManager->get('Mirasvit\Profiler\Model\Config');
 
         if (!$config->isEnabled()) {
             return;
@@ -27,20 +29,26 @@ class Html implements OutputInterface
             return;
         }
 
+        if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'profiler') !== false) {
+            return;
+        }
+
         /** @var \Magento\Framework\View\LayoutInterface $layout */
-        $layout = $objectManager->create('\Magento\Framework\View\LayoutInterface');
+        $layout = $objectManager->create('Magento\Framework\View\LayoutInterface');
 
-        //        $storage = $objectManager->get('\Mirasvit\Profiler\Model\Storage');
+        /** @var \Mirasvit\Profiler\Model\Storage $storage */
+        $storage = $objectManager->get('Mirasvit\Profiler\Model\Storage');
 
-        $context = $objectManager->get('\Mirasvit\Profiler\Block\Context');
-        $context->setProfilerStat($stat);
+//        $context = $objectManager->get('Mirasvit\Profiler\Block\Context');
+//        $context->setProfilerStat($stat);
 
-        //        $storage->dump();
+        $profileId = $storage->dump();
 
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
 
-        if (!$isAjax) {
-            echo $layout->createBlock('\Mirasvit\Profiler\Block\Container')
+        if (!$isAjax && PHP_SAPI != 'cli') {
+            echo $layout->createBlock('Mirasvit\Profiler\Block\Iframe')
+                ->setProfileId($profileId)
                 ->toHtml();
         }
     }

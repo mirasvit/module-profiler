@@ -1,7 +1,10 @@
 <?php
-namespace Mirasvit\Profiler\Model\Profile;
 
-class Magento implements ProfileInterface
+namespace Mirasvit\Profiler\Profile;
+
+use Mirasvit\Profiler\Api\Data\ProfileInterface;
+
+class Code implements ProfileInterface
 {
     /**
      * {@inheritdoc}
@@ -19,7 +22,7 @@ class Magento implements ProfileInterface
     /**
      * @return \Magento\Framework\Profiler\Driver\Standard\Stat
      */
-    public function getStat()
+    private function getStat()
     {
         return $_SERVER['MAGE_PROFILER_STAT'];
     }

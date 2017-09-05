@@ -6,6 +6,7 @@ use Magento\Framework\App\DeploymentConfig\Writer as DeploymentConfigWriter;
 use Magento\Framework\App\DeploymentConfig\Reader as DeploymentConfigReader;
 use Magento\Framework\Config\File\ConfigFilePool;
 use Magento\Config\Model\Config\Factory as ConfigFactory;
+use Magento\Framework\App\Filesystem\DirectoryList;
 
 class Config
 {
@@ -14,33 +15,40 @@ class Config
     /**
      * @var ScopeConfigInterface
      */
-    protected $scopeConfig;
+    private $scopeConfig;
 
     /**
      * @var DeploymentConfigWriter
      */
-    protected $deploymentConfigWriter;
+    private $deploymentConfigWriter;
 
     /**
      * @var DeploymentConfigWriter
      */
-    protected $deploymentConfigReader;
+    private $deploymentConfigReader;
 
     /**
      * @var ConfigFactory
      */
-    protected $configFactory;
+    private $configFactory;
+
+    /**
+     * @var DirectoryList
+     */
+    private $directoryList;
 
     public function __construct(
         DeploymentConfigWriter $deploymentConfigWriter,
         DeploymentConfigReader $deploymentConfigReader,
         ScopeConfigInterface $scopeConfig,
-        ConfigFactory $configFactory
+        ConfigFactory $configFactory,
+        DirectoryList $directoryList
     ) {
         $this->deploymentConfigWriter = $deploymentConfigWriter;
         $this->deploymentConfigReader = $deploymentConfigReader;
         $this->scopeConfig = $scopeConfig;
         $this->configFactory = $configFactory;
+        $this->directoryList = $directoryList;
     }
 
     /**
@@ -132,5 +140,15 @@ class Config
         $addresses = $this->scopeConfig->getValue('profiler/general/addresses');
 
         return array_filter(explode(',', $addresses));
+    }
+
+    public function getDumpPath()
+    {
+        $path = $this->directoryList->getPath('var').'/profiler/';
+        if (!file_exists($path)) {
+            mkdir($path);
+        }
+
+        return $path;
     }
 }

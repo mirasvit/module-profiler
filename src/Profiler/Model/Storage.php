@@ -1,23 +1,33 @@
 <?php
+
 namespace Mirasvit\Profiler\Model;
 
+use Mirasvit\Profiler\Profile\Pool;
 use Symfony\Component\Yaml\Dumper as YamlDumper;
+use Symfony\Component\Yaml\Parser as YamlParser;
 
 class Storage
 {
     /**
-     * @var Profile\Pool
+     * @var Pool
      */
-    protected $pool;
+    private $pool;
+
+    /**
+     * @var Config
+     */
+    private $config;
 
     public function __construct(
-        Profile\Pool $profilePool
+        Pool $profilePool,
+        Config $config
     ) {
         $this->pool = $profilePool;
+        $this->config = $config;
     }
 
     /**
-     * @return void
+     * @return string
      */
     public function dump()
     {
@@ -27,23 +37,52 @@ class Storage
             $dump[$code] = $profile->dump();
         }
 
-        $path = BP . '/var/profiler/';
-        if (!file_exists($path)) {
-            mkdir($path);
-        }
+        $meta = $dump['meta'];
 
-        $file = $path . microtime(true) . '.yaml';
-        $dumper = new YamlDumper();
-        $yaml = $dumper->dump($dump, 10);
+        $name = (\DateTime::createFromFormat('U.u', microtime(true)))->format('Y-m-d H:i:s.u');
 
-        file_put_contents($file, $yaml);
+        $file = $this->config->getDumpPath() . $name . '.meta';
+        file_put_contents($file, (new YamlDumper())->dump($meta, 10));
+
+        $file = $this->config->getDumpPath() . $name . '.prof';
+        file_put_contents($file, (new YamlDumper())->dump($dump, 10));
+
+        return $name;
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function load()
+    public function load($file)
     {
+        $content = file_get_contents($this->config->getDumpPath() . '/' . $file . '.prof');
+        $dump = (new YamlParser())->parse($content);
 
+        return $dump;
+    }
+
+    public function getList()
+    {
+        $result = [];
+        $files = scandir($this->config->getDumpPath());
+
+        foreach ($files as $file) {
+            if ($file[0] == '.') {
+                continue;
+            }
+
+            if (pathinfo($file)['extension'] != 'meta') {
+                continue;
+            }
+
+            $content = file_get_contents($this->config->getDumpPath() . '/' . $file);
+            $meta = (new YamlParser())->parse($content);
+
+            $meta['ID'] = pathinfo($file)['filename'];
+
+            $result[] = $meta;
+        }
+
+        return array_reverse($result);
     }
 }

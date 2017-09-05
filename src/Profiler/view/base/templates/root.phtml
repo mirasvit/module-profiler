@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <style>
+        <?=file_get_contents(dirname(dirname(__FILE__)) . '/web/css/module.css') ?>
+    </style>
+</head>
+<body>
+<?= $layoutContent ?>
+<script>
+    $(function () {
+        setInterval(function () {
+            parent.postMessage($('body').height(), '*');
+        }, 1000);
+    })
+</script>
+</body>
+</html>

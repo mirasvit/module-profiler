@@ -1,0 +1,29 @@
+<?php
+use Mirasvit\Profiler\Profile\Meta;
+
+/** @var \Mirasvit\Profiler\Block\Profile\Listing $block */
+?>
+<table>
+    <tr>
+        <th></th>
+        <th>Status</th>
+        <th>Method</th>
+        <th>Time</th>
+        <th>Execution</th>
+        <th>URL</th>
+    </tr>
+    <?php foreach ($block->getList() as $item): ?>
+        <tr>
+            <td class="text-center">
+                <a href="<?= $block->getUrl('profiler/profile/view', ['id' => $item['ID']]) ?>">
+                    view
+                </a>
+            </td>
+            <td class="text-center"><?= $item[Meta::RESPONSE_CODE] ?></td>
+            <td class="text-center"><?= $item[Meta::METHOD] ?></td>
+            <td nowrap="nowrap"><?= date('M d, H:i:s', $item[Meta::TIME]) ?></td>
+            <td nowrap="nowrap" class="text-right"><?= round($item[Meta::EXECUTION_TIME]) ?> ms</td>
+            <td><?= $item[Meta::URL] ?></td>
+        </tr>
+    <?php endforeach ?>
+</table>

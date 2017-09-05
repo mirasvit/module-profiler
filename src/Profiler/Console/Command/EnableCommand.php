@@ -1,4 +1,5 @@
 <?php
+
 namespace Mirasvit\Profiler\Console\Command;
 
 use Magento\Framework\App\State;
@@ -12,7 +13,7 @@ class EnableCommand extends AbstractCommand
     /**
      * @var Config
      */
-    protected $config;
+    private $config;
 
     public function __construct(
         Config $config,
@@ -40,10 +41,13 @@ class EnableCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        try{
+        try {
             $this->appState->setAreaCode('empty');
-        }catch (LocalizedException $e){}
+        } catch (LocalizedException $e) {
+        }
 
         $this->config->enableProfiler();
+
+        $output->writeln('<info>Status: ' . ($this->config->isEnabled() ? 'Enabled' : 'Disabled') . '</info>');
     }
 }

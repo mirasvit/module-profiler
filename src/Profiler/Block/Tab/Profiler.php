@@ -1,4 +1,5 @@
 <?php
+
 namespace Mirasvit\Profiler\Block\Tab;
 
 use Magento\Framework\View\Element\Template\Context as TemplateContext;
@@ -32,7 +33,15 @@ class Profiler extends Template implements TabInterface
      */
     public function getLabel()
     {
-        return __('Profiler');
+        return 'Code Profiler';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIcon()
+    {
+        return 'clock-o';
     }
 
     /**
@@ -40,7 +49,7 @@ class Profiler extends Template implements TabInterface
      */
     public function getStat()
     {
-        return $this->context->getProfilerStat();
+        return $this->context->getProfile()['code'];
     }
 
     /**
@@ -72,6 +81,7 @@ class Profiler extends Template implements TabInterface
      */
     public function getTimerLength($timerId)
     {
+        return 0;
         $total = microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'];
 
         return round($this->getStat()->fetch($timerId, 'sum') / $total * 100, 2);

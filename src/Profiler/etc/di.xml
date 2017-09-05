@@ -11,7 +11,7 @@
         </arguments>
     </type>
 
-    <type name="Mirasvit\Profiler\Block\Container">
+    <type name="Mirasvit\Profiler\Block\Profile\View">
         <arguments>
             <argument name="tabs" xsi:type="array">
                 <item name="profilerTab" xsi:type="object">Mirasvit\Profiler\Block\Tab\Profiler</item>
@@ -20,11 +20,13 @@
         </arguments>
     </type>
 
-    <type name="Mirasvit\Profiler\Model\Profile\Pool">
+    <type name="Mirasvit\Profiler\Profile\Pool">
         <arguments>
             <argument name="profiles" xsi:type="array">
-                <item name="magento" xsi:type="object">Mirasvit\Profiler\Model\Profile\Magento</item>
-                <item name="database" xsi:type="object">Mirasvit\Profiler\Model\Profile\Database</item>
+                <item name="general" xsi:type="object">Mirasvit\Profiler\Profile\General</item>
+                <item name="meta" xsi:type="object">Mirasvit\Profiler\Profile\Meta</item>
+                <item name="code" xsi:type="object">Mirasvit\Profiler\Profile\Code</item>
+                <item name="database" xsi:type="object">Mirasvit\Profiler\Profile\Database</item>
             </argument>
         </arguments>
     </type>

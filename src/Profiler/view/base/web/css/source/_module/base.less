@@ -1,0 +1,109 @@
+html, body {
+  margin: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: @text-color;
+}
+
+a {
+  color: @link-color;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: none;
+
+  tr {
+    th, td {
+      padding: 10px;
+    }
+
+    th {
+      background-color: @bg-dark;
+      border: 1px solid @border-dark;
+      color: #ffffff;
+      font-weight: 600;
+
+      &:first-child {
+        border-left: 0;
+      }
+      &:last-child {
+        border-right: 0;
+      }
+    }
+
+    td {
+      background-color: #ffffff;
+      border-left: 1px dashed @border-light;
+      border-right: 1px dashed @border-light;
+
+      &:first-child {
+        border-left: 0;
+      }
+      &:last-child {
+        border-right: 0;
+      }
+    }
+
+    &:nth-child(even) {
+      td {
+        background: @bg-light;
+      }
+    }
+
+    &:last-child {
+      td {
+        border-bottom: 1px solid @border-light;
+      }
+    }
+
+    &:hover {
+      td {
+        background: #e5f7fe;
+      }
+    }
+  }
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.metric {
+  border: 1px solid @border-light;
+  display: inline-block;
+  margin: 10px 10px 10px 0;
+
+  strong {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 300;
+    display: block;
+    padding: 10px;
+  }
+  i {
+    display: block;
+    background: @border-light;
+    font-style: normal;
+    text-align: center;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+}

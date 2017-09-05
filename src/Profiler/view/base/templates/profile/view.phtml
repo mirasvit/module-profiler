@@ -1,0 +1,37 @@
+<?php
+use Mirasvit\Profiler\Profile\Meta;
+use Mirasvit\Profiler\Profile\General;
+
+/** @var \Mirasvit\Profiler\Block\Profile\View $block */
+$profile = $block->getProfile();
+$general = $profile['general'];
+?>
+
+<div class="tabs-container">
+    <ul class="tabs" data-role="tabs">
+        <?php foreach ($block->getTabs() as $key => $tab): ?><li data-tab="<?= $key ?>">
+                <i class="fa fa-fw fa-<?=$tab->getIcon() ?>"></i> <?= $tab->getLabel() ?>
+        </li><?php endforeach ?>
+    </ul>
+    <?php foreach ($block->getTabs() as $key => $tab): ?>
+        <div class="tab-content" data-tab-content="<?= $key ?>">
+            <?= $tab->toHtml() ?>
+        </div>
+    <?php endforeach ?>
+</div>
+
+
+<script>
+    $(function () {
+        $('[data-role=tabs] li').on('click', function (e) {
+            $('[data-role=tabs] li').removeClass('_active');
+            $(e.currentTarget).addClass('_active');
+            $('[data-tab-content]').hide();
+            $('[data-tab-content=' + $(e.currentTarget).attr('data-tab') + ']').show();
+        });
+
+        $('[data-role=tabs] li:last').click();
+    });
+</script>
+
+

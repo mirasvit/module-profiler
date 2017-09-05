@@ -21,27 +21,27 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
     </thead>
     <tbody>
     <?php $idx = 0 ?>
-    <?php foreach ($stat->getFilteredTimerIds() as $timerId): ?>
-        <tr data-tt-id="<?= $timerId ?>" data-tt-parent-id="<?= $this->getParentTimerId($timerId) ?>"
-            data-threshold-value="<?= $stat->fetch($timerId, 'sum') * 1000 ?>">
+    <?php foreach ($stat as $timerId => $info): ?>
+        <tr data-tt-id="<?= $timerId ?>" data-tt-parent-id="<?= $block->getParentTimerId($timerId) ?>"
+            data-threshold-value="<?= $info['sum'] * 1000 ?>">
             <td>
-                <?= $this->renderTimerId($stat->fetch($timerId, 'id')) ?>
+                <?= $block->renderTimerId($timerId) ?>
             </td>
             <td class="number">
-                <?= $format->formatTime($stat->fetch($timerId, 'sum')) ?>
+                <?= $format->formatTime($info['sum']) ?>
                 <div class="timer-line" style="width: <?= $block->getTimerLength($timerId) ?>%;"></div>
             </td>
-            <td class="number"><?= $format->formatTime($stat->fetch($timerId, 'avg')) ?></td>
-            <td class="number"><?= $stat->fetch($timerId, 'count') ?></td>
+            <td class="number"><?= $format->formatTime($info['sum'] / $info['count']) ?></td>
+            <td class="number"><?= $info['count'] ?></td>
         </tr>
     <?php endforeach ?>
     </tbody>
 </table>
 <script>
-    require([
-        'jquery',
-        'Mirasvit_Profiler/js/table'
-    ], function ($) {
-        $('#profiler-table').profilerTable({});
-    });
+//    require([
+//        'jquery',
+//        'Mirasvit_Profiler/js/table'
+//    ], function ($) {
+//        $('#profiler-table').profilerTable({});
+//    });
 </script>

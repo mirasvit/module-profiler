@@ -1,5 +1,5 @@
 <?php
-namespace Mirasvit\Profiler\Model\Profile;
+namespace Mirasvit\Profiler\Api\Data;
 
 interface ProfileInterface
 {

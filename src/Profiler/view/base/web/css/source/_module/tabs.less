@@ -1,0 +1,36 @@
+.tabs-container {
+  .tabs {
+    list-style: none;
+    padding: 0 10px 0 10px;
+    margin: 0;
+    background: @bg-dark;
+
+    li {
+      display: inline-block;
+      background: @bg-dark;
+      color: #fff;
+      font-weight: 600;
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid @border-dark;
+
+      &:last-child {
+        border: none;
+      }
+
+      &:hover {
+        background: @bg-dark-hover;
+      }
+
+      &._active {
+        background: @bg-dark-hover;
+      }
+    }
+  }
+
+  .tab-content {
+    width: 100%;
+    display: none;
+    padding: 10px;
+  }
+}

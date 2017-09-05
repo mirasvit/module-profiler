@@ -1,9 +1,11 @@
 <?php
+
 namespace Mirasvit\Profiler\Block\Tab;
 
-use Magento\Framework\View\Element\Template\Context;
+use Magento\Framework\View\Element\Template\Context as TemplateContext;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\App\ResourceConnection;
+use Mirasvit\Profiler\Block\Context;
 
 class Sql extends Template implements TabInterface
 {
@@ -13,18 +15,17 @@ class Sql extends Template implements TabInterface
     protected $_template = 'tab/sql.phtml';
 
     /**
-     * @var ResourceConnection
+     * @var Context
      */
-    protected $resourceConnection;
+    private $context;
 
     public function __construct(
-        ResourceConnection $resourceConnection,
         Context $context,
-        array $data = []
+        TemplateContext $templateContext
     ) {
-        $this->resourceConnection = $resourceConnection;
+        $this->context = $context;
 
-        parent::__construct($context, $data);
+        parent::__construct($templateContext);
     }
 
     /**
@@ -32,24 +33,23 @@ class Sql extends Template implements TabInterface
      */
     public function getLabel()
     {
-        return __('Sql');
+        return __('Database');
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
-    public function isEnabled()
+    public function getIcon()
     {
-        return is_array($this->getDbProfiler()->getQueryProfiles());
+        return 'database';
     }
 
     /**
-     * @return \Zend_Db_Profiler
+     * @return array
      */
-    public function getDbProfiler()
+    public function getDump()
     {
-        return $this->resourceConnection->getConnection('read')
-            ->getProfiler();
+        return $this->context->getProfile()['database'];
     }
 
     /**

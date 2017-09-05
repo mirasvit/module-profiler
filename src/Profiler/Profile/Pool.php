@@ -1,10 +1,13 @@
 <?php
-namespace Mirasvit\Profiler\Model\Profile;
+
+namespace Mirasvit\Profiler\Profile;
+
+use Mirasvit\Profiler\Api\Data\ProfileInterface;
 
 class Pool
 {
     /**
-     * @var array
+     * @var ProfileInterface[]
      */
     private $profiles;
 
@@ -15,7 +18,7 @@ class Pool
     }
 
     /**
-     * @return array
+     * @return ProfileInterface[]
      */
     public function getProfiles()
     {
