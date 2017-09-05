@@ -39,15 +39,12 @@ class Html implements OutputInterface
         /** @var \Mirasvit\Profiler\Model\Storage $storage */
         $storage = $objectManager->get('Mirasvit\Profiler\Model\Storage');
 
-//        $context = $objectManager->get('Mirasvit\Profiler\Block\Context');
-//        $context->setProfilerStat($stat);
-
         $profileId = $storage->dump();
 
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
 
         if (!$isAjax && PHP_SAPI != 'cli') {
-            echo $layout->createBlock('Mirasvit\Profiler\Block\Iframe')
+            echo $layout->createBlock('Mirasvit\Profiler\Block\Toolbar')
                 ->setProfileId($profileId)
                 ->toHtml();
         }

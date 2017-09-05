@@ -1,0 +1,69 @@
+<?php
+/** @var \Mirasvit\Profiler\Block\Toolbar $block */
+use Mirasvit\Profiler\Profile\Meta;
+use Mirasvit\Profiler\Profile\Database;
+
+$dump = $block->getDump();
+$meta = $dump['meta'];
+$database = $dump['database'];
+?>
+<div class="mst-profiler__toolbar">
+    <section>
+        <?= $meta[Meta::RESPONSE_CODE] ?>
+    </section>
+
+    <section>
+        <i class="fa fa-clock-o"></i> <?= round($meta[Meta::EXECUTION_TIME]) ?> <i>ms</i>
+    </section>
+
+    <section>
+        <i class="fa fa-database"></i> <?= $database[Database::TOTAL_QUERIES] ?>
+        <i>in</i> <?= round($database[Database::TOTAL_ELAPSED]) ?> <i>ms</i>
+    </section>
+
+    <section class="view">
+        <a href="<?= $block->getProfileUrl() ?>" target="_blank">View</a>
+    </section>
+</div>
+<style>
+    .mst-profiler__toolbar {
+        width: 100%;
+        background: #373330;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 100000;
+        color: #fff;
+        font-size: 13px;
+        padding: 0;
+        margin: 0;
+        box-shadow: 0 -1px 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .mst-profiler__toolbar section {
+        display: inline-block;
+        padding: 8px 10px;
+        margin: 0;
+        border-right: 1px solid #524e4b;
+    }
+
+    .mst-profiler__toolbar section i {
+        font-style: normal;
+        color: #bbb;
+    }
+
+    .mst-profiler__toolbar section i.fa {
+        margin-right: 5px;
+    }
+
+    .mst-profiler__toolbar section.view {
+        background: #524e4b;
+        float: right;
+    }
+    .mst-profiler__toolbar section.view a {
+        color: #fff;
+        text-decoration: underline;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+</style>

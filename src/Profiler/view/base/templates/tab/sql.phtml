@@ -1,5 +1,6 @@
 <?php
 /** @var \Mirasvit\Profiler\Block\Tab\Sql $block */
+use Mirasvit\Profiler\Profile\Database;
 
 $dump = $block->getDump();
 
@@ -7,11 +8,11 @@ $dump = $block->getDump();
 $format = $this->helper('Mirasvit\Profiler\Helper\Format');
 ?>
 <div class="metric">
-    <strong><?= $format->formatTime($dump['totalElapsedSecs']) ?> ms</strong>
+    <strong><?= $format->formatTime($dump[Database::TOTAL_ELAPSED]) ?> ms</strong>
     <i>Total Time</i>
 </div>
 <div class="metric">
-    <strong><?= $dump['totalNumQueries'] ?></strong>
+    <strong><?= $dump[Database::TOTAL_QUERIES] ?></strong>
     <i>Total Queries</i>
 </div>
 
@@ -30,11 +31,11 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
     </tr>
 
     <?php foreach ($dump['profiles'] as $query): ?>
-        <tr data-threshold-value="<?= $query['elapsedSecs'] * 1000 ?>">
-            <td class="number"><?= ++$idx ?></td>
-            <td class="number"><?= $format->formatTime($query['elapsedSecs']) ?></td>
-            <td><?= \SqlFormatter::format($query['query']) ?></td>
-            <td><?= json_encode($query['queryParams']) ?></td>
+        <tr data-threshold-value="<?= $query[Database::QUERY_ELAPSED] ?>">
+            <td class="text-right"><?= ++$idx ?></td>
+            <td class="text-right"><?= $format->formatTime($query[Database::QUERY_ELAPSED]) ?></td>
+            <td><?= \SqlFormatter::format($query[Database::QUERY]) ?></td>
+            <td><?= $format->any($query[Database::QUERY_PARAMS]) ?></td>
         </tr>
     <?php endforeach ?>
 </table>

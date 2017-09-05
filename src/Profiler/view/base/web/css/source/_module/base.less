@@ -3,7 +3,7 @@ html, body {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   color: @text-color;
 }
 
@@ -13,6 +13,10 @@ a {
   &:hover {
     text-decoration: none;
   }
+}
+
+pre {
+  background: transparent !important;
 }
 
 table {
@@ -31,6 +35,7 @@ table {
       border: 1px solid @border-dark;
       color: #ffffff;
       font-weight: 600;
+      white-space: nowrap;
 
       &:first-child {
         border-left: 0;

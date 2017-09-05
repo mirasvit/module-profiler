@@ -47,6 +47,8 @@ class Storage
         $file = $this->config->getDumpPath() . $name . '.prof';
         file_put_contents($file, (new YamlDumper())->dump($dump, 10));
 
+        $this->cleanup();
+
         return $name;
     }
 
@@ -64,7 +66,7 @@ class Storage
     public function getList()
     {
         $result = [];
-        $files = scandir($this->config->getDumpPath());
+        $files = scandir($this->config->getDumpPath(), 1);
 
         foreach ($files as $file) {
             if ($file[0] == '.') {
@@ -83,6 +85,30 @@ class Storage
             $result[] = $meta;
         }
 
-        return array_reverse($result);
+        return $result;
+    }
+
+    public function cleanup()
+    {
+        $limit = 100;
+        $files = scandir($this->config->getDumpPath(), 1);
+
+        foreach ($files as $file) {
+            if ($file[0] == '.') {
+                continue;
+            }
+
+            if (pathinfo($file)['extension'] != 'meta') {
+                continue;
+            }
+
+            $limit--;
+
+            if ($limit < 0) {
+                $name = pathinfo($file)['filename'];
+                @unlink($this->config->getDumpPath() . '/' . $name . '.meta');
+                @unlink($this->config->getDumpPath() . '/' . $name . '.prof');
+            }
+        }
     }
 }

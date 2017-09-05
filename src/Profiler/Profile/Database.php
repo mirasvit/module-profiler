@@ -7,6 +7,14 @@ use Mirasvit\Profiler\Api\Data\ProfileInterface;
 
 class Database implements ProfileInterface
 {
+    const TOTAL_ELAPSED = 'totalElapsedSecs';
+    const TOTAL_QUERIES = 'totalNumQueries';
+
+    const QUERY = 'query';
+    const QUERY_TYPE = 'queryType';
+    const QUERY_PARAMS = 'queryParams';
+    const QUERY_ELAPSED = 'elapsedSecs';
+    const QUERY_STARTED = 'startedMicrotime';
     /**
      * @var ResourceConnection
      */
@@ -24,19 +32,19 @@ class Database implements ProfileInterface
     public function dump()
     {
         $dump = [
-            'totalElapsedSecs' => $this->getProfiler()->getTotalElapsedSecs(),
-            'totalNumQueries'  => $this->getProfiler()->getTotalNumQueries(),
-            'profiles'         => [],
+            self::TOTAL_ELAPSED => $this->getProfiler()->getTotalElapsedSecs() * 1000,
+            self::TOTAL_QUERIES => $this->getProfiler()->getTotalNumQueries(),
+            'profiles'          => [],
         ];
 
         /** @var \Zend_Db_Profiler_Query $profile */
         foreach ($this->getProfiler()->getQueryProfiles() as $profile) {
             $dump['profiles'][] = [
-                'query'            => $profile->getQuery(),
-                'queryType'        => $profile->getQueryType(),
-                'queryParams'      => $profile->getQueryParams(),
-                'elapsedSecs'      => $profile->getElapsedSecs(),
-                'startedMicrotime' => $profile->getStartedMicrotime(),
+                self::QUERY         => $profile->getQuery(),
+                self::QUERY_TYPE    => $profile->getQueryType(),
+                self::QUERY_PARAMS  => $profile->getQueryParams(),
+                self::QUERY_ELAPSED => $profile->getElapsedSecs(),
+                self::QUERY_STARTED => $profile->getStartedMicrotime(),
             ];
         }
 

@@ -20,9 +20,13 @@ class Context
         $this->storage = $storage;
     }
 
-    public function getProfile()
+    public function getProfile($id = false)
     {
-        return $this->storage->load($this->request->getParam('id'));
+        if (!$id) {
+            $id = $this->request->getParam('id');
+        }
+
+        return $this->storage->load($id);
     }
 
 

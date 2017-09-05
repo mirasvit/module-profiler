@@ -5,7 +5,7 @@ body {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   color: #303030;
 }
 a {
@@ -13,6 +13,9 @@ a {
 }
 a:hover {
   text-decoration: none;
+}
+pre {
+  background: transparent !important;
 }
 table {
   border-collapse: collapse;
@@ -29,6 +32,7 @@ table tr th {
   border: 1px solid #8a837f;
   color: #ffffff;
   font-weight: 600;
+  white-space: nowrap;
 }
 table tr th:first-child {
   border-left: 0;
@@ -114,4 +118,5 @@ table tr:hover td {
   width: 100%;
   display: none;
   padding: 10px;
+  box-sizing: border-box;
 }
