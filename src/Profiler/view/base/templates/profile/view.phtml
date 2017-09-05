@@ -12,6 +12,10 @@ $general = $profile['general'];
         <?php foreach ($block->getTabs() as $key => $tab): ?><li data-tab="<?= $key ?>">
                 <i class="fa fa-fw fa-<?=$tab->getIcon() ?>"></i> <?= $tab->getLabel() ?>
         </li><?php endforeach ?>
+        <li class="link" style="float: right;">
+            <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;
+            <a href="<?=$block->getUrl('profiler/profile/index') ?>">Back to list</a>
+        </li>
     </ul>
     <?php foreach ($block->getTabs() as $key => $tab): ?>
         <div class="tab-content" data-tab-content="<?= $key ?>">
@@ -24,10 +28,12 @@ $general = $profile['general'];
 <script>
     $(function () {
         $('[data-role=tabs] li').on('click', function (e) {
-            $('[data-role=tabs] li').removeClass('_active');
-            $(e.currentTarget).addClass('_active');
-            $('[data-tab-content]').hide();
-            $('[data-tab-content=' + $(e.currentTarget).attr('data-tab') + ']').show();
+            if ($(e.currentTarget).attr('data-tab')) {
+                $('[data-role=tabs] li').removeClass('_active');
+                $(e.currentTarget).addClass('_active');
+                $('[data-tab-content]').hide();
+                $('[data-tab-content=' + $(e.currentTarget).attr('data-tab') + ']').show();
+            }
         });
 
         $('[data-role=tabs] li:first').click();

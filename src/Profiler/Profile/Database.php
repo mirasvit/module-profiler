@@ -43,7 +43,7 @@ class Database implements ProfileInterface
                 self::QUERY         => $profile->getQuery(),
                 self::QUERY_TYPE    => $profile->getQueryType(),
                 self::QUERY_PARAMS  => $profile->getQueryParams(),
-                self::QUERY_ELAPSED => $profile->getElapsedSecs(),
+                self::QUERY_ELAPSED => $profile->getElapsedSecs() * 1000,
                 self::QUERY_STARTED => $profile->getStartedMicrotime(),
             ];
         }

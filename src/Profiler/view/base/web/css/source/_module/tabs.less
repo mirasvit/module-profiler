@@ -12,18 +12,23 @@
       font-weight: 600;
       padding: 10px;
       cursor: pointer;
-      border-bottom: 1px solid @border-dark;
+      border-bottom: 3px solid transparent;
 
-      &:last-child {
-        border: none;
+      a {
+        color: #fff;
       }
 
       &:hover {
-        background: @bg-dark-hover;
+        border-bottom: 3px solid @orange;
       }
 
       &._active {
         background: @bg-dark-hover;
+        border-bottom: 3px solid @orange;
+      }
+
+      &.link {
+        border-bottom: 3px solid transparent !important;
       }
     }
   }

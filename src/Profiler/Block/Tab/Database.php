@@ -7,12 +7,12 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\App\ResourceConnection;
 use Mirasvit\Profiler\Block\Context;
 
-class Sql extends Template implements TabInterface
+class Database extends Template implements TabInterface
 {
     /**
      * @var string
      */
-    protected $_template = 'tab/sql.phtml';
+    protected $_template = 'tab/database.phtml';
 
     /**
      * @var Context

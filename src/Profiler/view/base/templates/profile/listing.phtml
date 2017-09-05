@@ -1,7 +1,10 @@
 <?php
+/** @var \Mirasvit\Profiler\Block\Profile\Listing $block */
+
 use Mirasvit\Profiler\Profile\Meta;
 
-/** @var \Mirasvit\Profiler\Block\Profile\Listing $block */
+/** @var \Mirasvit\Profiler\Helper\Format $format */
+$format = $this->helper('Mirasvit\Profiler\Helper\Format');
 ?>
 <table>
     <tr>
@@ -9,7 +12,7 @@ use Mirasvit\Profiler\Profile\Meta;
         <th>Status</th>
         <th>Method</th>
         <th>Time</th>
-        <th>Execution</th>
+        <th>Execution <sup>ms</sup></th>
         <th>URL</th>
     </tr>
     <?php foreach ($block->getList() as $item): ?>
@@ -22,7 +25,7 @@ use Mirasvit\Profiler\Profile\Meta;
             <td class="text-center"><?= $item[Meta::RESPONSE_CODE] ?></td>
             <td class="text-center"><?= $item[Meta::METHOD] ?></td>
             <td nowrap="nowrap"><?= date('M d, H:i:s', $item[Meta::TIME]) ?></td>
-            <td nowrap="nowrap" class="text-right"><?= round($item[Meta::EXECUTION_TIME]) ?> ms</td>
+            <td nowrap="nowrap" class="text-right"><?= $format->formatTime($item[Meta::EXECUTION_TIME]) ?></td>
             <td><?= $item[Meta::URL] ?></td>
         </tr>
     <?php endforeach ?>

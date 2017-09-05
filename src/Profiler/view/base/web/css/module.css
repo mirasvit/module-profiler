@@ -16,6 +16,7 @@ a:hover {
 }
 pre {
   background: transparent !important;
+  margin: 0;
 }
 table {
   border-collapse: collapse;
@@ -44,6 +45,7 @@ table tr td {
   background-color: #ffffff;
   border-left: 1px dashed #d6d6d6;
   border-right: 1px dashed #d6d6d6;
+  vertical-align: top;
 }
 table tr td:first-child {
   border-left: 0;
@@ -59,6 +61,16 @@ table tr:last-child td {
 }
 table tr:hover td {
   background: #e5f7fe;
+}
+.tablesorter .tablesorter-header {
+  text-decoration: underline;
+}
+.tablesorter .tablesorter-header.tablesorter-headerDesc,
+.tablesorter .tablesorter-header.tablesorter-headerAsc {
+  background: #897b71;
+}
+.tablesorter .tablesorter-header sup {
+  text-decoration: none;
 }
 .text-left {
   text-align: left;
@@ -103,16 +115,20 @@ table tr:hover td {
   font-weight: 600;
   padding: 10px;
   cursor: pointer;
-  border-bottom: 1px solid #8a837f;
+  border-bottom: 3px solid transparent;
 }
-.tabs-container .tabs li:last-child {
-  border: none;
+.tabs-container .tabs li a {
+  color: #fff;
 }
 .tabs-container .tabs li:hover {
-  background: #6d625a;
+  border-bottom: 3px solid #ee5100;
 }
 .tabs-container .tabs li._active {
   background: #6d625a;
+  border-bottom: 3px solid #ee5100;
+}
+.tabs-container .tabs li.link {
+  border-bottom: 3px solid transparent !important;
 }
 .tabs-container .tab-content {
   width: 100%;

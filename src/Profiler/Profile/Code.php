@@ -12,6 +12,7 @@ class Code implements ProfileInterface
     public function dump()
     {
         $dump = [];
+
         foreach ($this->getStat()->getFilteredTimerIds() as $timerId) {
             $dump[$timerId] = $this->getStat()->get($timerId);
         }

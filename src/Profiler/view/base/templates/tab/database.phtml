@@ -1,5 +1,5 @@
 <?php
-/** @var \Mirasvit\Profiler\Block\Tab\Sql $block */
+/** @var \Mirasvit\Profiler\Block\Tab\Database $block */
 use Mirasvit\Profiler\Profile\Database;
 
 $dump = $block->getDump();
@@ -9,7 +9,7 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
 ?>
 <div class="metric">
     <strong><?= $format->formatTime($dump[Database::TOTAL_ELAPSED]) ?> ms</strong>
-    <i>Total Time</i>
+    <i>Total Queries Time</i>
 </div>
 <div class="metric">
     <strong><?= $dump[Database::TOTAL_QUERIES] ?></strong>
@@ -23,28 +23,31 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
 
 <?php $idx = 0 ?>
 <table id="sql-table" data-threshold="#sql-table-threshold">
+    <thead>
     <tr>
         <th>#</th>
-        <th>Time (ms)</th>
+        <th>Time <sup>ms</sup></th>
         <th>SQL Query</th>
         <th>Query Params</th>
     </tr>
-
+    </thead>
+    <tbody>
     <?php foreach ($dump['profiles'] as $query): ?>
         <tr data-threshold-value="<?= $query[Database::QUERY_ELAPSED] ?>">
             <td class="text-right"><?= ++$idx ?></td>
-            <td class="text-right"><?= $format->formatTime($query[Database::QUERY_ELAPSED]) ?></td>
+            <td class="text-right">
+                <?= $format->formatTime($query[Database::QUERY_ELAPSED]) ?>
+            </td>
             <td><?= \SqlFormatter::format($query[Database::QUERY]) ?></td>
             <td><?= $format->any($query[Database::QUERY_PARAMS]) ?></td>
         </tr>
     <?php endforeach ?>
+    </tbody>
 </table>
 
 <script>
-    //    require([
-    //        'jquery',
-    //        'Mirasvit_Profiler/js/table'
-    //    ], function ($) {
-    //        $('#sql-table').profilerTable({});
-    //    });
+    $(function () {
+        $("#sql-table").tablesorter();
+        console.log($("#sql-table"))
+    });
 </script>

@@ -6,12 +6,12 @@ use Magento\Framework\View\Element\Template\Context as TemplateContext;
 use Magento\Framework\View\Element\Template;
 use Mirasvit\Profiler\Block\Context;
 
-class Profiler extends Template implements TabInterface
+class Code extends Template implements TabInterface
 {
     /**
      * @var string
      */
-    protected $_template = 'tab/profiler.phtml';
+    protected $_template = 'tab/code.phtml';
 
     /**
      * @var Context
@@ -45,11 +45,24 @@ class Profiler extends Template implements TabInterface
     }
 
     /**
-     * @return \Magento\Framework\Profiler\Driver\Standard\Stat
+     * @return array
      */
-    public function getStat()
+    public function getCodeDump()
     {
         return $this->context->getProfile()['code'];
+    }
+
+    /**
+     * @return array
+     */
+    public function getGeneralDump()
+    {
+        return $this->context->getProfile()['general'];
+    }
+
+    public function getLevel($timerId)
+    {
+        return substr_count($timerId, '->');
     }
 
     /**

@@ -14,8 +14,8 @@
     <type name="Mirasvit\Profiler\Block\Profile\View">
         <arguments>
             <argument name="tabs" xsi:type="array">
-                <item name="profilerTab" xsi:type="object">Mirasvit\Profiler\Block\Tab\Profiler</item>
-                <item name="sqlTab" xsi:type="object">Mirasvit\Profiler\Block\Tab\Sql</item>
+                <item name="codeTab" xsi:type="object">Mirasvit\Profiler\Block\Tab\Code</item>
+                <item name="databaseTab" xsi:type="object">Mirasvit\Profiler\Block\Tab\Database</item>
             </argument>
         </arguments>
     </type>

@@ -17,6 +17,7 @@ a {
 
 pre {
   background: transparent !important;
+  margin: 0;
 }
 
 table {
@@ -49,6 +50,7 @@ table {
       background-color: #ffffff;
       border-left: 1px dashed @border-light;
       border-right: 1px dashed @border-light;
+      vertical-align: top;
 
       &:first-child {
         border-left: 0;
@@ -77,6 +79,21 @@ table {
     }
   }
 }
+
+.tablesorter {
+    .tablesorter-header {
+      text-decoration: underline;
+
+      &.tablesorter-headerDesc, &.tablesorter-headerAsc {
+        background: lighten(@bg-dark, 20%);
+      }
+
+      sup {
+        text-decoration: none;
+      }
+    }
+}
+
 
 .text-left {
   text-align: left;
