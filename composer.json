@@ -1,23 +1,23 @@
 {
-        "name": "mirasvit/module-profiler",
-        "description": "Magento 2 Profiler",
-        "require": {
-                "magento/module-store": "100.*.*",
-                "magento/module-backend": "100.*.*",
-                "magento/framework": "100.*.*",
-                "jdorn/sql-formatter": "^1.2"
-        },
-        "type": "magento2-module",
-        "version": "1.0.1",
-        "license": [
-                "proprietary"
-        ],
-        "autoload": {
-                "files": [
-                        "./registration.php"
-                ],
-                "psr-4": {
-                        "Mirasvit\\Profiler\\": "src/Profiler"
-                }
-        }
+  "name": "mirasvit/module-profiler",
+  "description": "Magento 2 Profiler",
+  "require": {
+    "magento/module-store": "100.*.*",
+    "magento/module-backend": "100.*.*",
+    "magento/framework": "100.*.*",
+    "jdorn/sql-formatter": "^1.2"
+  },
+  "type": "magento2-module",
+  "version": "1.0.2",
+  "license": [
+    "proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "./registration.php"
+    ],
+    "psr-4": {
+      "Mirasvit\\Profiler\\": "src/Profiler"
+    }
+  }
 }
