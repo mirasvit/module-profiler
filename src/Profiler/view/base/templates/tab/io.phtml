@@ -1,0 +1,30 @@
+<?php
+/** @var \Mirasvit\Profiler\Block\Tab\IO $block */
+
+use Magento\Framework\Profiler\Driver\Standard\Stat;
+use Mirasvit\Profiler\Profile\General;
+
+$dump = $block->getDump();
+$general = $dump['general'];
+
+/** @var \Mirasvit\Profiler\Helper\Format $format */
+$format = $this->helper('Mirasvit\Profiler\Helper\Format');
+?>
+<table>
+    <tr>
+        <td>URL</td>
+        <td><?= $general[General::URI] ?></td>
+    </tr>
+    <tr>
+        <td>GET Params</td>
+        <td><?= $format->any($general[General::GET]) ?></td>
+    </tr>
+    <tr>
+        <td>POST Params</td>
+        <td><?= $format->any($general[General::POST]) ?></td>
+    </tr>
+    <tr>
+        <td>IP</td>
+        <td><?= $general[General::IP] ?></td>
+    </tr>
+</table>

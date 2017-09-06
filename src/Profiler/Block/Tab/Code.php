@@ -33,7 +33,7 @@ class Code extends Template implements TabInterface
      */
     public function getLabel()
     {
-        return 'Code Profiler';
+        return 'Performance';
     }
 
     /**

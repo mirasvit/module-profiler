@@ -14,6 +14,8 @@ class General implements ProfileInterface
     const CLI_ARGS = 'CLI_ARGS';
     const DB_QUERIES = 'DB_QUERIES';
     const DB_TIME = 'DB_TIME';
+    const POST = 'POST';
+    const GET = 'GET';
 
     /**
      * @var ResourceConnection
@@ -50,6 +52,8 @@ class General implements ProfileInterface
             self::CLI_ARGS       => $this->context->getCliArgs(),
             self::DB_QUERIES     => $db->getTotalNumQueries(),
             self::DB_TIME        => round($db->getTotalElapsedSecs() * 1000),
+            self::GET            => isset($_GET) ? $_GET : [],
+            self::POST           => isset($_POST) ? $_POST : [],
         ];
 
 
