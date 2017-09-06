@@ -81,27 +81,6 @@ table tr:hover td {
 .text-center {
   text-align: center;
 }
-.metric {
-  border: 1px solid #d6d6d6;
-  display: inline-block;
-  margin: 10px 10px 10px 0;
-}
-.metric strong {
-  text-align: center;
-  font-size: 25px;
-  font-weight: 300;
-  display: block;
-  padding: 10px;
-}
-.metric i {
-  display: block;
-  background: #d6d6d6;
-  font-style: normal;
-  text-align: center;
-  padding: 3px 10px;
-  font-size: 12px;
-  font-weight: 600;
-}
 .tabs-container .tabs {
   list-style: none;
   padding: 0 10px 0 10px;
@@ -135,4 +114,44 @@ table tr:hover td {
   display: none;
   padding: 10px;
   box-sizing: border-box;
+}
+.metric {
+  border: 1px solid #d6d6d6;
+  display: inline-block;
+  margin: 10px 10px 10px 0;
+}
+.metric strong {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 300;
+  display: block;
+  padding: 10px;
+}
+.metric i {
+  display: block;
+  background: #d6d6d6;
+  font-style: normal;
+  text-align: center;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge {
+  border-radius: 1px;
+  background: #eee;
+}
+.badge.code-200 {
+  background: #00c602;
+  color: #fff;
+}
+.badge.code-301,
+.badge.code-302 {
+  background: #eebe00;
+  color: #fff;
+}
+.badge.code-404,
+.badge.code-503,
+.badge.code-500 {
+  background: #c6000c;
+  color: #fff;
 }

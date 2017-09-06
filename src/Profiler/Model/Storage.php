@@ -36,7 +36,9 @@ class Storage
         foreach ($this->pool->getProfiles() as $code => $profile) {
             $dump[$code] = $profile->dump();
         }
-
+        if (!isset($dump['meta'])) {
+            return false;
+        }
         $meta = $dump['meta'];
 
         $name = (\DateTime::createFromFormat('U.u', microtime(true)))->format('Y-m-d H:i:s.u');
