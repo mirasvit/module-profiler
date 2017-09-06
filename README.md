@@ -34,6 +34,12 @@ php -f bin/magento mirasvit:profiler:allow-ips --none # Remove IP restriction
 ## Licence
 [Open Software License (OSL 3.0)](http://opensource.org/licenses/osl-3.0.php)
 
+## 1.0.3
+*(2017-09-06)* 
+
+* Issues with less compilation
+
+---
 
 ## 1.0.2
 *(2017-09-05)* 
