@@ -25,7 +25,7 @@ class Html implements OutputInterface
 
         $addresses = $config->getAddressInfo();
 
-        if (count($addresses) && !in_array($_SERVER['REMOTE_ADDR'], $addresses)) {
+        if (count($addresses) && isset($_SERVER['REMOTE_ADDR']) && !in_array($_SERVER['REMOTE_ADDR'], $addresses)) {
             return;
         }
 

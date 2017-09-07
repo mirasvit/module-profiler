@@ -41,7 +41,8 @@ class Storage
         }
         $meta = $dump['meta'];
 
-        $name = (\DateTime::createFromFormat('U.u', microtime(true)))->format('Y-m-d H:i:s.u');
+        $dt = (\DateTime::createFromFormat('U.u', microtime(true)));
+        $name = $dt->format('Y-m-d H:i:s.u');
 
         $file = $this->config->getDumpPath() . $name . '.meta';
         file_put_contents($file, (new YamlDumper())->dump($meta, 10));

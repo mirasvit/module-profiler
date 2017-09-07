@@ -37,15 +37,18 @@ class Database implements ProfileInterface
             'profiles'          => [],
         ];
 
-        /** @var \Zend_Db_Profiler_Query $profile */
-        foreach ($this->getProfiler()->getQueryProfiles() as $profile) {
-            $dump['profiles'][] = [
-                self::QUERY         => $profile->getQuery(),
-                self::QUERY_TYPE    => $profile->getQueryType(),
-                self::QUERY_PARAMS  => $profile->getQueryParams(),
-                self::QUERY_ELAPSED => $profile->getElapsedSecs() * 1000,
-                self::QUERY_STARTED => $profile->getStartedMicrotime(),
-            ];
+        $profiles = $this->getProfiler()->getQueryProfiles();
+        if (is_array($profiles)) {
+            /** @var \Zend_Db_Profiler_Query $profile */
+            foreach ($profiles as $profile) {
+                $dump['profiles'][] = [
+                    self::QUERY         => $profile->getQuery(),
+                    self::QUERY_TYPE    => $profile->getQueryType(),
+                    self::QUERY_PARAMS  => $profile->getQueryParams(),
+                    self::QUERY_ELAPSED => $profile->getElapsedSecs() * 1000,
+                    self::QUERY_STARTED => $profile->getStartedMicrotime(),
+                ];
+            }
         }
 
         return $dump;
