@@ -30,7 +30,7 @@ class View extends Template
         Template\Context $context,
         array $tabs = []
     ) {
-        $this->request = $request;
+        $this->request = $context->getRequest();
         $this->storage = $storage;
         $this->tabs = $tabs;
 
