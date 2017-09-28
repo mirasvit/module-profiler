@@ -25,7 +25,6 @@ class View extends Template
     private $tabs;
 
     public function __construct(
-        RequestInterface $request,
         Storage $storage,
         Template\Context $context,
         array $tabs = []

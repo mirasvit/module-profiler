@@ -32,6 +32,7 @@ class Html implements OutputInterface
         if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'profiler') !== false) {
             return;
         }
+        
         /** @var \Mirasvit\Profiler\Model\Storage $storage */
         $storage = $objectManager->get('Mirasvit\Profiler\Model\Storage');
 
