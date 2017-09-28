@@ -32,10 +32,6 @@ class Html implements OutputInterface
         if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'profiler') !== false) {
             return;
         }
-
-        /** @var \Magento\Framework\View\LayoutInterface $layout */
-        $layout = $objectManager->create('Magento\Framework\View\LayoutInterface');
-
         /** @var \Mirasvit\Profiler\Model\Storage $storage */
         $storage = $objectManager->get('Mirasvit\Profiler\Model\Storage');
 
@@ -44,6 +40,9 @@ class Html implements OutputInterface
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
 
         if (!$isAjax && PHP_SAPI != 'cli') {
+            /** @var \Magento\Framework\View\LayoutInterface $layout */
+            $layout = $objectManager->create('Magento\Framework\View\LayoutInterface');
+
             echo $layout->createBlock('Mirasvit\Profiler\Block\Toolbar')
                 ->setProfileId($profileId)
                 ->toHtml();
