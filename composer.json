@@ -3,7 +3,8 @@
   "description": "Magento 2 Profiler",
   "require": {
     "magento/framework": "100.*|101.*",
-    "jdorn/sql-formatter": "^1.2"
+    "jdorn/sql-formatter": "^1.2",
+    "symfony/yaml": "*"
   },
   "type": "magento2-module",
   "version": "1.0.6",
