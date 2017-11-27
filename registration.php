@@ -18,7 +18,7 @@ if ($canEnable) {
                 'stat'   => $_SERVER['MAGE_PROFILER_STAT'],
             ],
         ],
-    ], BP, false);
+    ], 'BP', false);
 }
 
 \Magento\Framework\Component\ComponentRegistrar::register(
