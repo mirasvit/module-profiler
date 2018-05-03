@@ -8,7 +8,7 @@ $dump = $block->getCodeDump();
 $general = $block->getGeneralDump();
 
 /** @var \Mirasvit\Profiler\Helper\Format $format */
-$format = $this->helper('Mirasvit\Profiler\Helper\Format');
+$format = $this->helper(\Mirasvit\Profiler\Helper\Format::class);
 ?>
 <div class="metric">
     <strong><?= $format->formatTime($general[General::EXECUTION_TIME]) ?> ms</strong>
@@ -19,40 +19,88 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
     <i>Database Time</i>
 </div>
 
-<table id="code-table">
-    <thead>
-    <tr>
-        <th>Timer</th>
-        <th>Time <sup>ms</sup></th>
-        <th>Avg Time <sup>ms</sup></th>
-        <th>Count</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php $idx = 0 ?>
-    <?php foreach ($dump as $timerId => $item): ?>
-        <tr data-tt-id="<?= $timerId ?>" data-tt-parent-id="<?= $block->getParentTimerId($timerId) ?>"
-            data-threshold-value="<?= $item[Stat::TIME] * 1000 ?>">
-            <td>
-                <?php for ($i = 0; $i < $block->getLevel($timerId); $i++): ?>
-                    <?= str_repeat('·', 10) ?>&nbsp;
-                <?php endfor ?>
-                <?= $block->renderTimerId($timerId) ?>
-            </td>
-            <td class="text-right">
-                <?= $format->formatTime($item[Stat::TIME], true) ?>
-                <div class="timer-line" style="width: <?= $block->getTimerLength($timerId) ?>%;"></div>
-            </td>
-            <td class="text-right">
-                <?= $format->formatTime($item[Stat::TIME] / $item[Stat::COUNT], true) ?>
-            </td>
-            <td class="text-right"><?= $item[Stat::COUNT] ?></td>
-        </tr>
-    <?php endforeach ?>
-    </tbody>
-</table>
-<script>
-    $(function () {
-        $("#code-table").tablesorter();
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/spiermar/d3-flame-graph@1.0.11/dist/d3.flameGraph.min.css">
+<div id="chart"></div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.0/d3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/spiermar/d3-flame-graph@1.0.11/dist/d3.flameGraph.min.js"></script>
+<script type="text/javascript">
+  const flameGraphJson = <?= $block->getFlameGraphJson(); ?>;
+  const flamegraph = d3.flameGraph()
+    .width(1400)
+    // .height(1080)
+    // .cellHeight(18)
+    .transitionEase(d3.easeCubic)
+    .sort(false)
+    .title("")
+    .reversed(true);
+
+  const tip = d3.tip()
+    .direction("s")
+    .offset([8, 0])
+    .attr('class', 'd3-flame-graph-tip')
+    .html((d) => {
+      const ms = Math.round((d.data.sum/d.data.count * 1000));
+      console.log(d.data);
+      const memory = d.data.realmem ? `Memory: ${formatBytes(d.data.realmem)}` : '';
+      return `${d.data.name}<br />${d.data.count}x${ms}ms ${memory}`;
     });
+
+  function formatBytes(bytes,decimals) {
+    if(bytes == 0) return '0 Bytes';
+    var k = 1024,
+      dm = decimals || 2,
+      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  flamegraph.tooltip(tip);
+
+  d3.select("#chart")
+    .datum(flameGraphJson)
+    .call(flamegraph);
+
+
+
 </script>
+
+<div style="display:none;">
+  <table id="code-table">
+      <thead>
+      <tr>
+          <th>Timer</th>
+          <th>Time <sup>ms</sup></th>
+          <th>Avg Time <sup>ms</sup></th>
+          <th>Count</th>
+      </tr>
+      </thead>
+      <tbody>
+      <?php $idx = 0 ?>
+      <?php foreach ($dump as $timerId => $item): ?>
+          <tr data-tt-id="<?= $timerId ?>" data-tt-parent-id="<?= $block->getParentTimerId($timerId) ?>"
+              data-threshold-value="<?= $item[Stat::TIME] * 1000 ?>">
+              <td>
+                  <?php for ($i = 0; $i < $block->getLevel($timerId); $i++): ?>
+                      <?= str_repeat('·', 10) ?>&nbsp;x
+                  <?php endfor ?>
+                  <?= $block->renderTimerId($timerId) ?>
+              </td>
+              <td class="text-right">
+                  <?= $format->formatTime($item[Stat::TIME], true) ?>
+                  <div class="timer-line" style="width: <?= $block->getTimerLength($timerId) ?>%;"></div>
+              </td>
+              <td class="text-right">
+                  <?= $format->formatTime($item[Stat::TIME] / $item[Stat::COUNT], true) ?>
+              </td>
+              <td class="text-right"><?= $item[Stat::COUNT] ?></td>
+          </tr>
+      <?php endforeach ?>
+      </tbody>
+  </table>
+  <script>
+      $(function () {
+          $("#code-table").tablesorter();
+      });
+  </script>
+</div>

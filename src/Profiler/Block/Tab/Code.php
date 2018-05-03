@@ -52,6 +52,39 @@ class Code extends Template implements TabInterface
         return $this->context->getProfile()['code'];
     }
 
+    public function getFlameGraphJson() {
+        $frameGraph = [
+            'name' => 'root',
+            'value' => $this->getGeneralDump()[\Mirasvit\Profiler\Profile\General::EXECUTION_TIME] / 1000,
+            'children' => [],
+        ];
+
+        foreach ($this->context->getProfile()['code'] as $path => $data) {
+            $data['value'] = $data['sum'];
+            $data['children'] = [];
+
+            $selectedNode = &$frameGraph;
+            foreach(explode('->', $path) as $node) {
+                $children = &$selectedNode['children'];
+                if (! isset($children[$node])) {
+                    $data['name'] = $node;
+                    $children[$node] = $data;
+                }
+                $selectedNode = &$children[$node];
+            }
+        }
+
+        return \json_encode($this->_removeChildrenKeys($frameGraph));
+    }
+
+    private function _removeChildrenKeys($node) {
+        $node['children'] = array_values($node['children']);
+        foreach ($node['children'] as &$child) {
+            $child = $this->_removeChildrenKeys($child);
+        }
+        return $node;
+    }
+
     /**
      * @return array
      */
