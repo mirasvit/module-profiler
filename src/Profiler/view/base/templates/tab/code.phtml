@@ -1,10 +1,8 @@
 <?php
 /** @var \Mirasvit\Profiler\Block\Tab\Code $block */
 
-use Magento\Framework\Profiler\Driver\Standard\Stat;
 use Mirasvit\Profiler\Profile\General;
 
-$dump = $block->getCodeDump();
 $general = $block->getGeneralDump();
 
 /** @var \Mirasvit\Profiler\Helper\Format $format */
@@ -18,6 +16,7 @@ $format = $this->helper(\Mirasvit\Profiler\Helper\Format::class);
     <strong><?= $format->formatTime($general[General::DB_TIME]) ?> ms</strong>
     <i>Database Time</i>
 </div>
+
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/spiermar/d3-flame-graph@1.0.11/dist/d3.flameGraph.min.css">
 <div id="chart"></div>
@@ -60,47 +59,4 @@ $format = $this->helper(\Mirasvit\Profiler\Helper\Format::class);
   d3.select("#chart")
     .datum(flameGraphJson)
     .call(flamegraph);
-
-
-
 </script>
-
-<div style="display:none;">
-  <table id="code-table">
-      <thead>
-      <tr>
-          <th>Timer</th>
-          <th>Time <sup>ms</sup></th>
-          <th>Avg Time <sup>ms</sup></th>
-          <th>Count</th>
-      </tr>
-      </thead>
-      <tbody>
-      <?php $idx = 0 ?>
-      <?php foreach ($dump as $timerId => $item): ?>
-          <tr data-tt-id="<?= $timerId ?>" data-tt-parent-id="<?= $block->getParentTimerId($timerId) ?>"
-              data-threshold-value="<?= $item[Stat::TIME] * 1000 ?>">
-              <td>
-                  <?php for ($i = 0; $i < $block->getLevel($timerId); $i++): ?>
-                      <?= str_repeat('·', 10) ?>&nbsp;x
-                  <?php endfor ?>
-                  <?= $block->renderTimerId($timerId) ?>
-              </td>
-              <td class="text-right">
-                  <?= $format->formatTime($item[Stat::TIME], true) ?>
-                  <div class="timer-line" style="width: <?= $block->getTimerLength($timerId) ?>%;"></div>
-              </td>
-              <td class="text-right">
-                  <?= $format->formatTime($item[Stat::TIME] / $item[Stat::COUNT], true) ?>
-              </td>
-              <td class="text-right"><?= $item[Stat::COUNT] ?></td>
-          </tr>
-      <?php endforeach ?>
-      </tbody>
-  </table>
-  <script>
-      $(function () {
-          $("#code-table").tablesorter();
-      });
-  </script>
-</div>
