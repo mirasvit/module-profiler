@@ -1,7 +1,7 @@
 <?php
 $_SERVER['MAGE_PROFILER_STAT'] = new \Magento\Framework\Profiler\Driver\Standard\Stat();
 
-$canEnable = true;
+$canEnable = defined('BP');
 
 if (PHP_SAPI == 'cli') {
     global $argv;
