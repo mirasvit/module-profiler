@@ -40,7 +40,7 @@ class Html implements OutputInterface
 
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
 
-        if (!$isAjax && PHP_SAPI != 'cli') {
+        if (!$isAjax && PHP_SAPI != 'cli' && strpos($_SERVER['HTTP_ACCEPT'], 'text/html') !== false) {
             /** @var \Magento\Framework\View\LayoutInterface $layout */
             $layout = $objectManager->create('Magento\Framework\View\LayoutInterface');
 
