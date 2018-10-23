@@ -4,7 +4,7 @@
   "require": {
     "magento/framework": "100.*|101.*",
     "jdorn/sql-formatter": "^1.2",
-    "symfony/yaml": "*"
+    "symfony/yaml": "dev-issue-8145"
   },
   "type": "magento2-module",
   "version": "1.0.6",
