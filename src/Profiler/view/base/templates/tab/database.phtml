@@ -26,6 +26,7 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
     <thead>
     <tr>
         <th>#</th>
+        <th>Query Occurance</th>
         <th>Time <sup>ms</sup></th>
         <th>SQL Query</th>
         <th>Query Params</th>
@@ -35,6 +36,7 @@ $format = $this->helper('Mirasvit\Profiler\Helper\Format');
     <?php foreach ($dump['profiles'] as $query): ?>
         <tr data-threshold-value="<?= $query[Database::QUERY_ELAPSED] ?>">
             <td class="text-right"><?= ++$idx ?></td>
+            <td><?= $query[Database::QUERY_COUNT] ?? 'N/A' ?></td>
             <td class="text-right">
                 <?= $format->formatTime($query[Database::QUERY_ELAPSED]) ?>
             </td>
