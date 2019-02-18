@@ -6,7 +6,7 @@
     "jdorn/sql-formatter": "^1.2",
     "symfony/yaml": ">=2.2.4"
   },
-  version: "1.0.7",
+  "version": "1.0.7",
   "type": "magento2-module",
   "license": [
     "proprietary"
