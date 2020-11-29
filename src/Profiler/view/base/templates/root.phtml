@@ -3,9 +3,7 @@
 <head>
     <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.15/js/jquery.tablesorter.min.js"></script>
-    <style>
-        <?=file_get_contents(dirname(dirname(__FILE__)) . '/web/css/module.css') ?>
-    </style>
+    <link rel="stylesheet" href="<? echo $this->getViewFileUrl('Mirasvit_Profiler::css/module.css')?>">
 </head>
 <body>
 <?= $layoutContent ?>
