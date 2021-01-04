@@ -14,7 +14,11 @@ class Html implements OutputInterface
      */
     public function display(Stat $stat)
     {
-        $objectManager = ObjectManager::getInstance();
+        try {
+            $objectManager = ObjectManager::getInstance();
+        } catch (\RuntimeException $e) {
+            return;
+        }
 
         /** @var \Mirasvit\Profiler\Model\Config $config */
         $config = $objectManager->get('Mirasvit\Profiler\Model\Config');
@@ -32,7 +36,7 @@ class Html implements OutputInterface
         if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'profiler') !== false) {
             return;
         }
-        
+
         /** @var \Mirasvit\Profiler\Model\Storage $storage */
         $storage = $objectManager->get('Mirasvit\Profiler\Model\Storage');
 
