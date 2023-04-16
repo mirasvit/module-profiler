@@ -1,6 +1,10 @@
 <?php
 namespace Mirasvit\Profiler\Model;
 
+use Magento\Framework\App\PageCache\Version;
+use Magento\Framework\App\Cache\TypeListInterface;
+use Magento\Framework\App\Cache\Frontend\Pool;
+
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\DeploymentConfig\Writer as DeploymentConfigWriter;
 use Magento\Framework\App\DeploymentConfig\Reader as DeploymentConfigReader;
@@ -36,19 +40,29 @@ class Config
      * @var DirectoryList
      */
     private $directoryList;
+    private $_configWriter;
+
+    protected $cacheTypeList;
+    protected $cacheFrontendPool;
 
     public function __construct(
         DeploymentConfigWriter $deploymentConfigWriter,
         DeploymentConfigReader $deploymentConfigReader,
         ScopeConfigInterface $scopeConfig,
         ConfigFactory $configFactory,
-        DirectoryList $directoryList
+        DirectoryList $directoryList,
+        \Magento\Framework\App\Config\Storage\WriterInterface $configWriter,
+        TypeListInterface $cacheTypeList, 
+        Pool $cacheFrontendPool        
     ) {
         $this->deploymentConfigWriter = $deploymentConfigWriter;
         $this->deploymentConfigReader = $deploymentConfigReader;
         $this->scopeConfig = $scopeConfig;
         $this->configFactory = $configFactory;
         $this->directoryList = $directoryList;
+        $this->_configWriter = $configWriter;
+        $this->cacheTypeList = $cacheTypeList;
+        $this->cacheFrontendPool = $cacheFrontendPool;        
     }
 
     /**
@@ -67,8 +81,11 @@ class Config
         $config = $this->configFactory->create();
         $config->setDataByPath('profiler/general/enable', true);
         $config->save();
+        
+        //$this->_configWriter->save('profiler/general/enable', true, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
 
         $this->enableDbProfiler();
+        $this->clearCache();
 
         return true;
     }
@@ -82,7 +99,10 @@ class Config
         $config->setDataByPath('profiler/general/enable', false);
         $config->save();
 
+        //$this->_configWriter->save('profiler/general/enable', false, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
+
         $this->disableDbProfiler();
+        $this->clearCache();
 
         return true;
     }
@@ -139,7 +159,7 @@ class Config
     {
         $addresses = $this->scopeConfig->getValue('profiler/general/addresses');
 
-        return array_filter(explode(',', $addresses));
+        return array_filter(explode(',', $addresses ?? ''));
     }
 
     public function getDumpPath()
@@ -150,5 +170,32 @@ class Config
         }
 
         return $path;
+    }
+    
+    public function clearCache()
+    {
+        echo "Clearing cache...\n";
+        
+        $_types = [
+                    'config',
+                    'layout',
+                    'block_html',
+                    'collections',
+                    'reflection',
+                    'db_ddl',
+                    'eav',
+                    'config_integration',
+                    'config_integration_api',
+                    'full_page',
+                    'translate',
+                    'config_webservice'
+                    ];
+         
+        foreach ($_types as $type) {
+            $this->cacheTypeList->cleanType($type);
+        }
+        foreach ($this->cacheFrontendPool as $cacheFrontend) {
+            $cacheFrontend->getBackend()->clean();
+        }        
     }
 }
