@@ -1,16 +1,13 @@
 <?php
 namespace Mirasvit\Profiler\Model;
 
-use Magento\Framework\App\PageCache\Version;
-use Magento\Framework\App\Cache\TypeListInterface;
-use Magento\Framework\App\Cache\Frontend\Pool;
-
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\DeploymentConfig\Writer as DeploymentConfigWriter;
 use Magento\Framework\App\DeploymentConfig\Reader as DeploymentConfigReader;
 use Magento\Framework\Config\File\ConfigFilePool;
 use Magento\Config\Model\Config\Factory as ConfigFactory;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\App\ResourceConnection;
 
 class Config
 {
@@ -42,8 +39,7 @@ class Config
     private $directoryList;
     private $_configWriter;
 
-    protected $cacheTypeList;
-    protected $cacheFrontendPool;
+    protected $resourceConnection;
 
     public function __construct(
         DeploymentConfigWriter $deploymentConfigWriter,
@@ -52,8 +48,7 @@ class Config
         ConfigFactory $configFactory,
         DirectoryList $directoryList,
         \Magento\Framework\App\Config\Storage\WriterInterface $configWriter,
-        TypeListInterface $cacheTypeList, 
-        Pool $cacheFrontendPool        
+        ResourceConnection $resourceConnection
     ) {
         $this->deploymentConfigWriter = $deploymentConfigWriter;
         $this->deploymentConfigReader = $deploymentConfigReader;
@@ -61,8 +56,7 @@ class Config
         $this->configFactory = $configFactory;
         $this->directoryList = $directoryList;
         $this->_configWriter = $configWriter;
-        $this->cacheTypeList = $cacheTypeList;
-        $this->cacheFrontendPool = $cacheFrontendPool;        
+        $this->resourceConnection = $resourceConnection;
     }
 
     /**
@@ -70,22 +64,24 @@ class Config
      */
     public function isEnabled()
     {
-        return (bool)$this->scopeConfig->getValue('profiler/general/enable');
+        $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
+        $scopeId = 0;
+        
+        $connection = $this->resourceConnection->getConnection();
+        $table = $connection->getTableName('core_config_data');
+        $query = sprintf("SELECT value FROM `%s` WHERE path = 'profiler/general/enable' and scope = '%s' and scope_id = '%d'", $table, $scope, $scopeId);
+        $result = $connection->fetchOne($query);
+
+        return (bool)$result;
     }
 
     /**
      * @return bool
      */
     public function enableProfiler()
-    {
-        $config = $this->configFactory->create();
-        $config->setDataByPath('profiler/general/enable', true);
-        $config->save();
-        
-        //$this->_configWriter->save('profiler/general/enable', true, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
-
+    {        
+        $this->_configWriter->save('profiler/general/enable', '1', $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
         $this->enableDbProfiler();
-        $this->clearCache();
 
         return true;
     }
@@ -94,15 +90,9 @@ class Config
      * @return bool
      */
     public function disableProfiler()
-    {
-        $config = $this->configFactory->create();
-        $config->setDataByPath('profiler/general/enable', false);
-        $config->save();
-
-        //$this->_configWriter->save('profiler/general/enable', false, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
-
+    {     
+        $this->_configWriter->save('profiler/general/enable', '0', $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
         $this->disableDbProfiler();
-        $this->clearCache();
 
         return true;
     }
@@ -170,32 +160,5 @@ class Config
         }
 
         return $path;
-    }
-    
-    public function clearCache()
-    {
-        echo "Clearing cache...\n";
-        
-        $_types = [
-                    'config',
-                    'layout',
-                    'block_html',
-                    'collections',
-                    'reflection',
-                    'db_ddl',
-                    'eav',
-                    'config_integration',
-                    'config_integration_api',
-                    'full_page',
-                    'translate',
-                    'config_webservice'
-                    ];
-         
-        foreach ($_types as $type) {
-            $this->cacheTypeList->cleanType($type);
-        }
-        foreach ($this->cacheFrontendPool as $cacheFrontend) {
-            $cacheFrontend->getBackend()->clean();
-        }        
-    }
+    }    
 }
