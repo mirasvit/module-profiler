@@ -47,7 +47,7 @@ class EnableCommand extends AbstractCommand
         }
 
         $this->config->enableProfiler();
-
+        
         $output->writeln('<info>Status: ' . ($this->config->isEnabled() ? 'Enabled' : 'Disabled') . '</info>');
     }
 }

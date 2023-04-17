@@ -7,6 +7,7 @@ use Magento\Framework\App\DeploymentConfig\Reader as DeploymentConfigReader;
 use Magento\Framework\Config\File\ConfigFilePool;
 use Magento\Config\Model\Config\Factory as ConfigFactory;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\App\ResourceConnection;
 
 class Config
 {
@@ -36,19 +37,26 @@ class Config
      * @var DirectoryList
      */
     private $directoryList;
+    private $_configWriter;
+
+    protected $resourceConnection;
 
     public function __construct(
         DeploymentConfigWriter $deploymentConfigWriter,
         DeploymentConfigReader $deploymentConfigReader,
         ScopeConfigInterface $scopeConfig,
         ConfigFactory $configFactory,
-        DirectoryList $directoryList
+        DirectoryList $directoryList,
+        \Magento\Framework\App\Config\Storage\WriterInterface $configWriter,
+        ResourceConnection $resourceConnection
     ) {
         $this->deploymentConfigWriter = $deploymentConfigWriter;
         $this->deploymentConfigReader = $deploymentConfigReader;
         $this->scopeConfig = $scopeConfig;
         $this->configFactory = $configFactory;
         $this->directoryList = $directoryList;
+        $this->_configWriter = $configWriter;
+        $this->resourceConnection = $resourceConnection;
     }
 
     /**
@@ -56,18 +64,23 @@ class Config
      */
     public function isEnabled()
     {
-        return (bool)$this->scopeConfig->getValue('profiler/general/enable');
+        $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
+        $scopeId = 0;
+        
+        $connection = $this->resourceConnection->getConnection();
+        $table = $connection->getTableName('core_config_data');
+        $query = sprintf("SELECT value FROM `%s` WHERE path = 'profiler/general/enable' and scope = '%s' and scope_id = '%d'", $table, $scope, $scopeId);
+        $result = $connection->fetchOne($query);
+
+        return (bool)$result;
     }
 
     /**
      * @return bool
      */
     public function enableProfiler()
-    {
-        $config = $this->configFactory->create();
-        $config->setDataByPath('profiler/general/enable', true);
-        $config->save();
-
+    {        
+        $this->_configWriter->save('profiler/general/enable', '1', $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
         $this->enableDbProfiler();
 
         return true;
@@ -77,11 +90,8 @@ class Config
      * @return bool
      */
     public function disableProfiler()
-    {
-        $config = $this->configFactory->create();
-        $config->setDataByPath('profiler/general/enable', false);
-        $config->save();
-
+    {     
+        $this->_configWriter->save('profiler/general/enable', '0', $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
         $this->disableDbProfiler();
 
         return true;
@@ -139,7 +149,7 @@ class Config
     {
         $addresses = $this->scopeConfig->getValue('profiler/general/addresses');
 
-        return array_filter(explode(',', $addresses));
+        return array_filter(explode(',', $addresses ?? ''));
     }
 
     public function getDumpPath()
@@ -150,5 +160,5 @@ class Config
         }
 
         return $path;
-    }
+    }    
 }

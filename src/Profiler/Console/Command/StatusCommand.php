@@ -46,6 +46,9 @@ class StatusCommand extends AbstractCommand
             $this->appState->setAreaCode('empty');
         }catch (LocalizedException $e){}
 
+        $output->writeln('<info>Clearing cache...</info>');
+        $this->config->clearCache();
+
         $output->writeln('<info>Status: ' . ($this->config->isEnabled() ? 'Enabled' : 'Disabled') . '</info>');
         $output->writeln('<info>IPs: ' . implode(', ', $this->config->getAddressInfo()) . '</info>');
     }
